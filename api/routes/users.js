@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const User = require('../models/user');
 const Artisan = require( '../models/artisan')
-
+/*
 router.get('/', (req, res, next) => {
     User.find()
         .select('name phone_number creation_date')
@@ -26,6 +26,31 @@ router.get('/', (req, res, next) => {
                     }
                 })
             };
+            console.log(docs);
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+*/
+router.get('/', (req, res, next) => {
+    User.find()
+        .select('name phone_number creation_date')
+        .exec()
+        .then( docs => {
+            const response = docs.map( doc => {
+                    return {
+                        _id: doc._id, 
+                        name: doc.name,
+                        phone_number: doc.phone_number,
+                        creation_date: doc.creation_date,
+                        
+                    }
+                })
             console.log(docs);
             res.status(200).json(response);
         })
