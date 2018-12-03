@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const User = require('../models/user');
 const Artisan = require( '../models/artisan')
-/*
+
 router.get('/', (req, res, next) => {
     User.find()
         .select('name phone_number creation_date')
@@ -36,7 +36,7 @@ router.get('/', (req, res, next) => {
             });
         });
 });
-*/
+/*
 router.get('/', (req, res, next) => {
     User.find()
         .select('name phone_number creation_date')
@@ -61,7 +61,7 @@ router.get('/', (req, res, next) => {
             });
         });
 });
-
+*/
 router.post('/', (req, res, next) => { 
     var current_date = new Date()
     const user = new User( {
