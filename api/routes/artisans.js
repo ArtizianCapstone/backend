@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
 
+
 router.get('/', (req, res, next) => {
     Artisan.find()
         .select('_id name bio phone_number creation_date')
@@ -38,7 +39,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    var currentDate = new Date();
+   var currentDate = new Date();
     User.findById( req.body.userId)
         .then(user => {
             if( !user)  {
@@ -57,6 +58,29 @@ router.post('/', (req, res, next) => {
             return artisan.save();
         })
         .then(result => { 
+            var AWS = require('aws-sdk');
+            AWS.config.update({region: 'us-east-1'});
+            User.findById(result.user).then( function(myDoc) {
+                var messageParams =
+                {
+                   Message: "You have been added to an artisan group created by " + myDoc.name,
+                   PhoneNumber: '+' + result.phone_number
+                };
+
+                var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(messageParams).promise();
+
+                publishTextPromise.then(
+                   function(data)
+                   {
+                      console.log("MessageID is " + data.MessageID);
+                   })
+                   .catch(
+                      function(err)
+                      {
+                         console.error(err, err.stack);
+                      });
+
+            })
             console.log( result);
             res.status(201).json({
                 message: 'Artisan stored',
