@@ -115,16 +115,16 @@ router.patch('/:orderId', (req, res, next) => {
     });
 });
 
-router.delete('/:orderId', (req, res, next) => {
-    Order.remove({_id: req.params.orderId })
+router.delete('/:artisanId', (req, res, next) => {
+    Artisan.remove({_id: req.params.artisanId })
         .exec()
         .then( result => {
             res.status(200).json({
-                message: 'Order deleted',
+                message: 'Artisan deleted',
                 request: {
                     type: "POST",
-                    url: "http://localhost:3000/orders",
-                    body: { ProductId: 'ID', quantity: 'Number'}
+                    url: "http://localhost:3000/orders"//,
+                    //body: { ProductId: 'ID', quantity: 'Number'}
                 }
             });
         })

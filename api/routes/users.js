@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
         .then( docs => {
             const response = {
                 count: docs.length,
-                artisans: docs.map( doc => {
+                users: docs.map( doc => {
                     return {
                         _id: doc._id, 
                         name: doc.name,
@@ -36,7 +36,32 @@ router.get('/', (req, res, next) => {
             });
         });
 });
-
+/*
+router.get('/', (req, res, next) => {
+    User.find()
+        .select('name phone_number creation_date')
+        .exec()
+        .then( docs => {
+            const response = docs.map( doc => {
+                    return {
+                        _id: doc._id, 
+                        name: doc.name,
+                        phone_number: doc.phone_number,
+                        creation_date: doc.creation_date,
+                        
+                    }
+                })
+            console.log(docs);
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+*/
 router.post('/', (req, res, next) => { 
     var current_date = new Date()
     const user = new User( {
