@@ -127,7 +127,7 @@ router.get('/:userId', (req, res, next) => {
 router.get('/:userId/artisans', (req, res, next) => {
     const id = req.params.userId;
     Artisan.find({user: id})
-        .select('_id name phone_number creation_date')
+        .select('_id name bio phone_number creation_date')
         .exec()
         .then(doc => {
             console.log("From database", doc);
