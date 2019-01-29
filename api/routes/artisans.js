@@ -5,10 +5,36 @@ const mongoose = require('mongoose');
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString() + file.originalname);
+    }
+});
+
+const fileFilter = (rq, file, cb) => {
+    //reject file
+    if( file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+const upload = multer({
+    storage: storage, 
+    limits:  {
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+});
+
 
 router.get('/', (req, res, next) => {
     Artisan.find()
-        .select('_id name bio phone_number creation_date')
+        .select('_id name bio phone_number image creation_date')
         .populate('user', 'name')
         .exec()
         .then(docs => {
@@ -21,6 +47,7 @@ router.get('/', (req, res, next) => {
                         name: doc.name,
                         bio: doc.bio,
                         phone_number: doc.phone_number,
+                        image: doc.image,
                         creation_date: doc.creation_date,
                         request: {
                             use: 'Get specific artisan',
@@ -84,7 +111,8 @@ router.post('/', (req, res, next) => {
         });
     });
 */
-router.post('/', (req, res, next) => {
+router.post('/', upload.single('image'), (req, res, next) => {
+   console.log(req.file);
    var currentDate = new Date();
     User.findById( req.body.userId)
         .then(user => {
@@ -99,11 +127,13 @@ router.post('/', (req, res, next) => {
                 name: req.body.name,
                 bio: req.body.bio,
                 phone_number: req.body.phone_number,
+                image: req.file.path,
                 creation_date: currentDate
             });
             return artisan.save();
         })
         .then(result => { 
+            /*
             var AWS = require('aws-sdk');
             AWS.config.update({region: 'us-east-1'});
             User.findById(result.user).then( function(myDoc) {
@@ -126,7 +156,7 @@ router.post('/', (req, res, next) => {
                          console.error(err, err.stack);
                       });
 
-            })
+            })*/
             console.log( result);
             res.status(201).json({
                 message: 'Artisan stored',
@@ -136,6 +166,7 @@ router.post('/', (req, res, next) => {
                     name: result.name,
                     bio: result.bio,
                     phone_number: result.phone_number,
+                    image: result.image,
                     creation_date: result.creation_date,
                 },
                 request: {
