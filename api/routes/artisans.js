@@ -1,3 +1,4 @@
+require('./smsFramework')();
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -5,32 +6,8 @@ const mongoose = require('mongoose');
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
 
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './uploads/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, new Date().toISOString() + file.originalname);
-    }
-});
-
-const fileFilter = (rq, file, cb) => {
-    //reject file
-    if( file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
-const upload = multer({
-    storage: storage, 
-    limits:  {
-        fileSize: 1024 * 1024 * 5
-    },
-    fileFilter: fileFilter
-});
-
+var uploadFramework = require('./uploadFramework');
+const upload = uploadFramework.upload;
 
 router.get('/', (req, res, next) => {
     Artisan.find()
@@ -48,12 +25,7 @@ router.get('/', (req, res, next) => {
                         bio: doc.bio,
                         phone_number: doc.phone_number,
                         image: doc.image,
-                        creation_date: doc.creation_date,
-                        request: {
-                            use: 'Get specific artisan',
-                            type: 'GET',
-                            url: 'http://localhost:3000/artisans/' + doc._id
-                        }
+                        creation_date: doc.creation_date, 
                     }
                 })
             });
@@ -64,53 +36,7 @@ router.get('/', (req, res, next) => {
             });
         });
 });
-/*
-router.post('/', (req, res, next) => {
-   var currentDate = new Date();
-    User.findById( req.body.userId)
-        .then(user => {
-            if( !user)  {
-                return res.status(404).json({
-                    message: "User not found"
-                });
-            }
-            const artisan = new Artisan({
-                _id: mongoose.Types.ObjectId(),
-                user: req.body.userId,
-                name: req.body.name,
-                bio: req.body.bio,
-                phone_number: req.body.phone_number,
-                creation_date: currentDate
-            });
-            return artisan.save();
-        })
-        .then(result => { 
-            console.log( result);
-            res.status(201).json({
-                message: 'Artisan stored',
-                createdOrder: {
-                    _id: result._id,
-                    user: result.user,
-                    name: result.name,
-                    bio: result.bio,
-                    phone_number: result.phone_number,
-                    creation_date: result.creation_date,
-                },
-                request: {
-                    use: 'Get specific artisan',
-                    type: 'GET',
-                    url: 'http://localhost:3000/artisans/' + result._id
-                }
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-    });
-*/
+
 router.post('/', upload.single('image'), (req, res, next) => {
    console.log(req.file);
    var currentDate = new Date();
@@ -133,30 +59,10 @@ router.post('/', upload.single('image'), (req, res, next) => {
             return artisan.save();
         })
         .then(result => { 
-            /*
-            var AWS = require('aws-sdk');
-            AWS.config.update({region: 'us-east-1'});
-            User.findById(result.user).then( function(myDoc) {
-                var messageParams =
-                {
-                   Message: "You have been added to an artisan group created by " + myDoc.name,
-                   PhoneNumber: '+' + result.phone_number
-                };
-
-                var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(messageParams).promise();
-
-                publishTextPromise.then(
-                   function(data)
-                   {
-                      console.log("MessageID is " + data.MessageID);
-                   })
-                   .catch(
-                      function(err)
-                      {
-                         console.error(err, err.stack);
-                      });
-
-            })*/
+            //console.log(testSmsFramework(4)); 
+             
+            User.findById(result.user).then( function(myDoc) { addArtisanText(myDoc, result); }); 
+            
             console.log( result);
             res.status(201).json({
                 message: 'Artisan stored',
@@ -168,12 +74,7 @@ router.post('/', upload.single('image'), (req, res, next) => {
                     phone_number: result.phone_number,
                     image: result.image,
                     creation_date: result.creation_date,
-                },
-                request: {
-                    use: 'Get specific artisan',
-                    type: 'GET',
-                    url: 'http://localhost:3000/artisans/' + result._id
-                }
+                }, 
             });
         })
         .catch(err => {
@@ -195,12 +96,7 @@ router.get('/:artisanId', (req, res, next) => {
                 });
             }
             res.status(200).json({
-                artisan: artisan,
-                request: {
-                    use: 'Get all artisans.',
-                    type: 'GET',
-                    url: 'http://localhost:3000/artisans'
-                }
+                artisan: artisan
             });
         })
         .catch( err => {
