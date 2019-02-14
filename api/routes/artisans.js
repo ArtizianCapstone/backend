@@ -1,3 +1,4 @@
+require('./smsFramework')();
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -5,9 +6,12 @@ const mongoose = require('mongoose');
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
 
+var uploadFramework = require('./uploadFramework');
+const upload = uploadFramework.upload;
+
 router.get('/', (req, res, next) => {
     Artisan.find()
-        .select('_id name bio phone_number creation_date')
+        .select('_id name bio phone_number image creation_date')
         .populate('user', 'name')
         .exec()
         .then(docs => {
@@ -20,12 +24,8 @@ router.get('/', (req, res, next) => {
                         name: doc.name,
                         bio: doc.bio,
                         phone_number: doc.phone_number,
-                        creation_date: doc.creation_date,
-                        request: {
-                            use: 'Get specific artisan',
-                            type: 'GET',
-                            url: 'http://localhost:3000/artisans/' + doc._id
-                        }
+                        image: doc.image,
+                        creation_date: doc.creation_date, 
                     }
                 })
             });
@@ -37,8 +37,9 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', (req, res, next) => {
-    var currentDate = new Date();
+router.post('/', upload.single('image'), (req, res, next) => {
+   console.log(req.file);
+   var currentDate = new Date();
     User.findById( req.body.userId)
         .then(user => {
             if( !user)  {
@@ -52,11 +53,16 @@ router.post('/', (req, res, next) => {
                 name: req.body.name,
                 bio: req.body.bio,
                 phone_number: req.body.phone_number,
+                image: req.file.path,
                 creation_date: currentDate
             });
             return artisan.save();
         })
         .then(result => { 
+            //console.log(testSmsFramework(4)); 
+             
+            User.findById(result.user).then( function(myDoc) { addArtisanText(myDoc, result); }); 
+            
             console.log( result);
             res.status(201).json({
                 message: 'Artisan stored',
@@ -66,13 +72,9 @@ router.post('/', (req, res, next) => {
                     name: result.name,
                     bio: result.bio,
                     phone_number: result.phone_number,
+                    image: result.image,
                     creation_date: result.creation_date,
-                },
-                request: {
-                    use: 'Get specific artisan',
-                    type: 'GET',
-                    url: 'http://localhost:3000/artisans/' + result._id
-                }
+                }, 
             });
         })
         .catch(err => {
@@ -94,12 +96,7 @@ router.get('/:artisanId', (req, res, next) => {
                 });
             }
             res.status(200).json({
-                artisan: artisan,
-                request: {
-                    use: 'Get all artisans.',
-                    type: 'GET',
-                    url: 'http://localhost:3000/artisans'
-                }
+                artisan: artisan
             });
         })
         .catch( err => {

@@ -127,7 +127,7 @@ router.get('/:userId', (req, res, next) => {
 router.get('/:userId/artisans', (req, res, next) => {
     const id = req.params.userId;
     Artisan.find({user: id})
-        .select('_id name phone_number creation_date')
+        .select('_id name bio phone_number image creation_date')
         .exec()
         .then(doc => {
             console.log("From database", doc);
@@ -173,7 +173,7 @@ router.patch('/:userId', (req, res, next) => {
 });
 
 router.delete('/:userId', (req, res, next) => {
-    const id = req.params.Id;
+    const id = req.params.userId;
     User.remove({_id: id})
         .exec()
         .then(result => {
