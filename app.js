@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./api/routes/users');
 const artisanRoutes = require('./api/routes/artisans');
 const listingRoutes = require('./api/routes/listings');
+const meetingRoutes = require('./api/routes/meetings');
 
 mongoose.connect(
     'mongodb://jkurtz678:'+
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 app.use('/users', userRoutes );
 app.use('/artisans', artisanRoutes);
 app.use('/listings', listingRoutes);
+app.use('/meetings', meetingRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Endpoint not found');
