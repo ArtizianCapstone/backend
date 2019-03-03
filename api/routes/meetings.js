@@ -85,7 +85,6 @@ router.get("/byuser/:userID", (req, res, next) =>
             console.log(err);
             res.status(500).json({error: err});
         });
-
 });
 
 //get meetings for specific user and artisan
