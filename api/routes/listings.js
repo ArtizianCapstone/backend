@@ -113,7 +113,7 @@ router.get("/byuser/:userID", (req, res, next) =>
             }
             else
             {
-                res.status(404).json({message: "No meeting found for this user"});
+                res.status(404).json({message: "No listing found for this user"});
             }
         })
         .catch(err =>
