@@ -123,6 +123,36 @@ router.get("/byuser/:userID", (req, res, next) =>
         });
 });
 
+//get listings for specific user and artisan
+router.get("/:userID/:artisanID", (req, res, next) =>
+{
+    const usr = req.params.userID;
+    const art = req.params.artisanID;
+    Listing.find(
+        { 
+            user: usr,
+            artisan: art
+        })
+        .exec()
+        .then(doc =>
+        {
+            console.log("Finding by user and artisan", doc);
+            if (doc)
+            {
+                res.status(200).json(doc);
+            }
+            else
+            {
+                res.status(404).json({message: "No listing between artistan and user found"});
+            }
+        })
+        .catch(err =>
+        {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+});
+
 //update listing
 router.patch("/:listingID", (req, res, next) =>
 {

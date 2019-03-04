@@ -8,6 +8,7 @@ const userRoutes = require('./api/routes/users');
 const artisanRoutes = require('./api/routes/artisans');
 const listingRoutes = require('./api/routes/listings');
 const meetingRoutes = require('./api/routes/meetings');
+const orderRoutes = require('./api/routes/orders');
 
 mongoose.connect(
     'mongodb://jkurtz678:'+
@@ -20,7 +21,7 @@ mongoose.connect(
 
 mongoose.Promise = global.Promise;
 
-app.use( morgan('dev'));
+app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -35,10 +36,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/users', userRoutes );
+app.use('/users', userRoutes);
 app.use('/artisans', artisanRoutes);
 app.use('/listings', listingRoutes);
 app.use('/meetings', meetingRoutes);
+app.use('/orders', orderRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Endpoint not found');
