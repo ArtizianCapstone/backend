@@ -12,9 +12,10 @@ const upload = uploadFramework.upload;
 //get all listings
 router.get('/', (req, res, next) => {
     Listing.find()
-        .select('name description price listingImage creation_date')
+//      .select('name description price listingImage creation_date')
         .exec()
         .then( docs => {
+        /*
             const response = {
                 count: docs.length,
                 listings: docs.map( doc => {
@@ -23,6 +24,20 @@ router.get('/', (req, res, next) => {
             };
             console.log(docs);
             res.status(200).json(response);
+        })
+        */  
+            console.log(docs);
+            if (docs.length >= 0)
+            {
+                res.status(200).json(docs);
+            }
+            else
+            {
+                res.status(404).json(
+                {
+                    message: "No entries found"
+                })
+            }
         })
         .catch(err => {
             console.log(err);
