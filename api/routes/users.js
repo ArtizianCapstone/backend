@@ -144,7 +144,41 @@ router.get('/:userId/artisans', (req, res, next) => {
         });
 });
 
+//update user
+router.patch('/:userID', (req, res, next) => 
+{
+    const id = req.params.userID;
+    const updateOps = {};
+    for (const ops of req.body)
+    {
+        updateOps[ops.propName] = ops.value;
+    }
+    //find by ID
+    User.update(
+    {
+        _id: id
+    },
+    {
+        //set each member
+        $set: updateOps
+    })
+    .exec()
+    .then(result =>
+    {
+        console.log(result);
+        res.status(200).json(result);
+    })
+    .catch(err =>
+    {
+        console.log(err);
+        res.status(500).json(
+        {
+            error: err
+        });
+    });
+});
 
+/*
 router.patch('/:userId', (req, res, next) => {
     const id = req.params.userId;
     const updateOps = {};
@@ -171,6 +205,7 @@ router.patch('/:userId', (req, res, next) => {
             });
         })
 });
+*/
 
 router.delete('/:userId', (req, res, next) => {
     const id = req.params.userId;
