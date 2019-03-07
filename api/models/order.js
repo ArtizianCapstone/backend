@@ -10,7 +10,7 @@ const orderSchema = mongoose.Schema( {
     paid: {type: Boolean, required: true},
     date_paid: { type: Date, required: false},
     shipped: {type: Boolean, required: true},
-    date_shipped: {type: Date, required, false}
+    date_shipped: {type: Date, required: false}
 });
 
 module.exports = mongoose.model('Order', orderSchema);
