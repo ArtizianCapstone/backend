@@ -13,6 +13,8 @@ const upload = uploadFramework.upload;
 router.get('/', (req, res, next) => {
     Listing.find()
 //      .select('name description price listingImage creation_date')
+        .populate('user', 'name')
+        .populate('artisan', 'name')
         .exec()
         .then( docs => {
         /*
@@ -52,6 +54,8 @@ router.post('/', upload.single('listingImage'),(req, res, next) => {
     var current_date = new Date()
     const listing = new Listing( {
         _id: new mongoose.Types.ObjectId(),
+        user: req.body.userID,
+        artisan: req.body.artisanID,
         name: req.body.name,
         description: req.body.phone_number,
         price: req.body.price,
@@ -93,6 +97,8 @@ router.get("/:listingID", (req, res, next) =>
 {
     const id = req.params.listingID;
     Listing.findById(id)
+        .populate('artisan', 'name')
+        .populate('user', 'name')
         .exec()
         .then(doc =>
         {
@@ -118,6 +124,8 @@ router.get("/byuser/:userID", (req, res, next) =>
 {
     const usr = req.params.userID;
     Listing.find({ user: usr })
+        .populate('user', 'name')
+        .populate('artisan', 'name')
         .exec()
         .then(doc =>
         {
@@ -148,6 +156,8 @@ router.get("/:userID/:artisanID", (req, res, next) =>
             user: usr,
             artisan: art
         })
+        .populate('user', 'name')
+        .populate('artisan', 'name')
         .exec()
         .then(doc =>
         {
