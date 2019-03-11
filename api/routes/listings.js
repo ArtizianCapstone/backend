@@ -54,6 +54,8 @@ router.post('/', upload.single('listingImage'),(req, res, next) => {
     var current_date = new Date()
     const listing = new Listing( {
         _id: new mongoose.Types.ObjectId(),
+        user: req.body.userID,
+        artisan: req.body.artisanID,
         name: req.body.name,
         description: req.body.phone_number,
         price: req.body.price,
