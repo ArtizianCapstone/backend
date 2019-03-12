@@ -15,6 +15,21 @@ router.get('/', (req, res, next) => {
         .populate('user', 'name')
         .exec()
         .then(docs => {
+            res.status(200).json(docs);
+        })
+        .catch(err =>{ 
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+/*
+router.get('/', (req, res, next) => {
+    Artisan.find()
+        .select('_id name bio phone_number image creation_date')
+        .populate('user', 'name')
+        .exec()
+        .then(docs => {
             res.status(200).json({
                 count: docs.length,
                 artisans: docs.map(doc => {
@@ -36,7 +51,7 @@ router.get('/', (req, res, next) => {
             });
         });
 });
-
+*/
 router.post('/', upload.single('image'), (req, res, next) => {
    console.log(req.file);
    var currentDate = new Date();
