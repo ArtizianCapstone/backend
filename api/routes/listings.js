@@ -59,6 +59,7 @@ router.post('/', upload.single('listingImage'),(req, res, next) => {
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
+        quantity: req.body.quantity,
         creation_date: current_date,
         listingImage: req.file.path
     });
@@ -82,6 +83,36 @@ router.post('/', upload.single('listingImage'),(req, res, next) => {
                         url: "http://localhost:3000/users/" + result._id
                     }*/
                 }
+            });
+        })
+        .catch( err => { 
+            console.log( err );
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
+//post a listing no image
+router.post('/noimage',(req, res, next) => { 
+    var current_date = new Date()
+    const listing = new Listing( {
+        _id: new mongoose.Types.ObjectId(),
+        user: req.body.userID,
+        artisan: req.body.artisanID,
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        quantity: req.body.quantity,
+        creation_date: current_date
+    });
+    listing
+        .save()
+        .then( result => {
+            console.log(result);
+            res.status(201).json({
+                message: 'Created listing successfully',
+                createdListing: result 
             });
         })
         .catch( err => { 
