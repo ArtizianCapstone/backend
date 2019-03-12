@@ -85,6 +85,53 @@ router.post('/', upload.single('image'), (req, res, next) => {
         });
     });
 
+router.post('/noimage', (req, res, next) => {
+   var currentDate = new Date();
+    User.findById( req.body.userId)
+        .then(user => {
+            if( !user)  {
+                return res.status(404).json({
+                    message: "User not found"
+                });
+            }
+            const artisan = new Artisan({
+                _id: mongoose.Types.ObjectId(),
+                user: req.body.userId,
+                name: req.body.name,
+                bio: req.body.bio,
+                phone_number: req.body.phone_number,
+                creation_date: currentDate
+            });
+            return artisan.save();
+        })
+        .then(result => { 
+            //console.log(testSmsFramework(4)); 
+             
+            //User.findById(result.user).then( function(myDoc) { addArtisanText(myDoc, result); }); 
+            
+            console.log( result);
+            res.status(201).json({
+                message: 'Artisan stored',
+                createdOrder: {
+                    _id: result._id,
+                    user: result.user,
+                    name: result.name,
+                    bio: result.bio,
+                    phone_number: result.phone_number,
+                    creation_date: result.creation_date,
+                }, 
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+    });
+
+
+
 router.get('/:artisanId', (req, res, next) => {
     Artisan.findById(req.params.artisanId)
         .populate( 'User')
