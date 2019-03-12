@@ -57,7 +57,7 @@ router.post('/', upload.single('listingImage'),(req, res, next) => {
         user: req.body.userID,
         artisan: req.body.artisanID,
         name: req.body.name,
-        description: req.body.phone_number,
+        description: req.body.description,
         price: req.body.price,
         creation_date: current_date,
         listingImage: req.file.path
