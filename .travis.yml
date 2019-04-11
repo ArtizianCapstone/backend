@@ -3,9 +3,19 @@ language: node_js
 node_js:
     - "11.11.0"
 
+install:
+    - npm install newman
+
+before_script:
+    - node --version
+    - npm --version
+    - node_modules/.bin/newman --version
+
+script:
+    - node_modules/.bin/newman run test/Test_Create-Delete_User.postman_collection.json -e test/Local_Host.postman_environment.json
+
 #safelist
 braches:
     only:
     - master
-    except:
-    - rest-meetings
+    - rest-postman
