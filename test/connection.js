@@ -3,6 +3,7 @@ mongoose.Promise = global.Promise;
 
 before(function(done)
 {
+    /*
     mongoose.connect(
         'mongodb://jkurtz678:'+
         process.env.MONGO_ATLAS_PW + 
@@ -10,6 +11,7 @@ before(function(done)
         {
             useNewUrlParser: true
         });
+    */
 
     mongoose.connection.once('open', function()
     {
