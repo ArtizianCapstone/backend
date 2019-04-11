@@ -1,0 +1,11 @@
+#node js language
+language: node_js
+node_js:
+    - "11.11.0"
+
+#safelist
+braches:
+    only:
+    - master
+    except:
+    - rest-meetings
