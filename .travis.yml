@@ -3,6 +3,8 @@ language: node_js
 node_js:
     - "11.11.0"
 
+services: mongodb
+
 install:
     - npm install newman
 
