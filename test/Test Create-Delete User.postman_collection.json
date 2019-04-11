@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "b327c89f-7b91-4e5c-848d-7054febf6461",
+		"name": "Test Create/Delete User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET all Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/users/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				},
+				"description": "Get list of Users."
+			},
+			"response": []
+		},
+		{
+			"name": "Post new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "557e2e6c-dcd0-4f53-8f02-04fcacaa820a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"let madeUser = JSON.parse(responseBody).createdUser;",
+							"console.log(madeUser);",
+							"",
+							"pm.variables.set(\"userJustMade\", madeUser._id);",
+							"console.log(pm.variables.get(\"userJustMade\"));",
+							"",
+							"pm.test(\"Testing that name is Toan Deph\", function () {",
+							"    //madeUser.has(\"name\");",
+							"    pm.expect(madeUser.name).to.eql(\"Toan Deph\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Toan Deph\",\n\t\"password\": \"iCantHearAThing\",\n\t\"phone_number\": \"121234\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Creates a new User named Toan Deph."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "078c7b61-5bfa-4456-9a12-e9a5213f6124",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200, user successfully deleted\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/users/{{userJustMade}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userJustMade}}"
+					]
+				},
+				"description": "Deletes the user just made by the POST request."
+			},
+			"response": []
+		},
+		{
+			"name": "Look for Deleted User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d1768232-8a61-42be-b41b-442d7bc9af52",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Deleted user can't be found\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/users/{{userJustMade}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{userJustMade}}"
+					]
+				},
+				"description": "Should not be able to find the user just found (404 error)."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "db3336b4-e40d-40cc-8247-64cf07e6b151",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "61cf2e70-c961-41cb-afa2-b3803f456fde",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fca034ac-7692-4f4d-ae3e-efeb4933571e",
+			"key": "userJustMade",
+			"value": "",
+			"type": "string",
+			"description": ""
+		}
+	]
+}
