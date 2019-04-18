@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
+const Meeting = require("../models/meeting");
 
 var uploadFramework = require('./uploadFramework');
 const upload = uploadFramework.upload;
@@ -212,6 +213,19 @@ router.patch('/:artisanID', (req, res, next) =>
 
 
 router.delete('/:artisanId', (req, res, next) => {
+    var target = Artisan.findById(req.params.artisanId);
+
+    //delete associated meetings
+    Meeting.find({ artisan: target._id })
+        .remove()
+        .exec();
+
+    //delete associated listings
+    Listing.find( { artisan: target._id })
+        .remove()
+        .exec();
+
+    //remove artisan
     Artisan.remove({_id: req.params.artisanId })
         .exec()
         .then( result => {
@@ -227,6 +241,7 @@ router.delete('/:artisanId', (req, res, next) => {
 });
 
 
+/*
 //update artisan
 router.patch('/:artisanID', (req, res, next) => 
 {
@@ -260,6 +275,7 @@ router.patch('/:artisanID', (req, res, next) =>
         });
     });
 });
+*/
 
 
 module.exports = router;
