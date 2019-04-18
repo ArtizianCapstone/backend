@@ -216,14 +216,24 @@ router.delete('/:artisanId', (req, res, next) => {
     var target = Artisan.findById(req.params.artisanId);
 
     //delete associated meetings
-    Meeting.find({ artisan: target._id })
-        .remove()
-        .exec();
+    Meeting.deleteMany({ artisan: target._id }, function(err)
+    {
+        console.log(err);
+        res.status(500).json(
+        {
+            error: err
+        });
+    });
 
     //delete associated listings
-    Listing.find( { artisan: target._id })
-        .remove()
-        .exec();
+    Listing.deleteMany({ artisan: target._id }, function(err)
+    {
+        console.log(err);
+        res.status(500).json(
+        {
+            error: err
+        });
+    });
 
     //remove artisan
     Artisan.remove({_id: req.params.artisanId })
