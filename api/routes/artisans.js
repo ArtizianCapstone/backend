@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
 const Meeting = require("../models/meeting");
+const Listing = require("../models/listing");
 
 var uploadFramework = require('./uploadFramework');
 const upload = uploadFramework.upload;
