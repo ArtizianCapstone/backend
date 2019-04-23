@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise;
 before(function(done)
 {
     mongoose.connect(
-        'mongodb://localhost:27017',
+        'mongodb://localhost:27017/myapp',
         {
             useNewUrlParser: true
         });
