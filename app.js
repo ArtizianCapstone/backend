@@ -10,16 +10,17 @@ const listingRoutes = require('./api/routes/listings');
 const meetingRoutes = require('./api/routes/meetings');
 const orderRoutes = require('./api/routes/orders');
 
+mongoose.Promise = global.Promise;
+
+
 mongoose.connect(
     'mongodb://jkurtz678:'+
     process.env.MONGO_ATLAS_PW + 
     '@artizian-shard-00-00-kdklx.mongodb.net:27017,artizian-shard-00-01-kdklx.mongodb.net:27017,artizian-shard-00-02-kdklx.mongodb.net:27017/test?ssl=true&replicaSet=Artizian-shard-0&authSource=admin&retryWrites=true',
     {
         useNewUrlParser: true
-    }
-);
+    });
 
-mongoose.Promise = global.Promise;
 
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
