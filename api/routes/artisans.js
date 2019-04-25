@@ -1,10 +1,12 @@
-require('./smsFramework')();
+require('./smsFramework');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
+const Meeting = require('../models/artisan');
+const Listing = require('../models/listing');
 
 var uploadFramework = require('./uploadFramework');
 const upload = uploadFramework.upload;
@@ -212,6 +214,9 @@ router.patch('/:artisanID', (req, res, next) =>
 
 
 router.delete('/:artisanId', (req, res, next) => {
+    //delete listngs
+    //delete meetings
+    //delete artisan
     Artisan.remove({_id: req.params.artisanId })
         .exec()
         .then( result => {
@@ -227,6 +232,7 @@ router.delete('/:artisanId', (req, res, next) => {
 });
 
 
+/*
 //update artisan
 router.patch('/:artisanID', (req, res, next) => 
 {
@@ -260,6 +266,7 @@ router.patch('/:artisanID', (req, res, next) =>
         });
     });
 });
+*/
 
 
 module.exports = router;
