@@ -24,5 +24,6 @@ before(function(done)
 //disconnect probably
 after(function(done)
 {
-    mongoose.connection.disconnect(done);
+    mongoose.connection.close();
+    done();
 });
