@@ -1,17 +1,15 @@
 //this file will contain tests, but not yet
-console.log("testing users");
-
 const assert = require('assert');
 const mongoose = require('mongoose');
 const User = require('../api/models/user');
 
-describe("tests creating/deleting a user", function()
+describe("Test Framework", function()
 {
     var current_date = new Date();
     var id = new mongoose.Types.ObjectId();
 
     //create tests
-    it("creates a user", function(done)
+    it("can access database", function(done)
     {
         var usr = new User(
         {

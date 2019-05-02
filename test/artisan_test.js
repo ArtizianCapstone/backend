@@ -131,6 +131,58 @@ describe("Tests artisan", function()
                     })
                     .expect(res => meet2 = res.body.createdMeeting._id)
                     .expect(201, cb);
+            },
+
+            //finds listing
+            function(cb)
+            {
+                request(app)
+                    .get("/listings/" + list1)
+                    .expect(200, cb);
+            },
+
+            //deletes artisan
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + art)
+                    .expect(200, cb);
+            },
+
+            //checks artisan
+            function(cb)
+            {
+                request(app)
+                    .get("/artisans" + art)
+                    .expect(404, cb);
+            },
+
+            //checks listings
+            function(cb)
+            {
+                request(app)
+                    .get("/listings/" + list1)
+                    .expect(404, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/listings/" + list2)
+                    .expect(404, cb);
+            },
+
+            //checks meetings
+            function(cb)
+            {
+                request(app)
+                    .get("/meetings/" + meet1)
+                    .expect(404, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/meetings/" + meet2)
+                    .expect(404, cb);
             }
         ], done);
     });
