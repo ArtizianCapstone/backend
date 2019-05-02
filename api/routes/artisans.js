@@ -260,7 +260,7 @@ router.delete('/:artisanId', (req, res, next) => {
             Listing.deleteMany({ artisan: art}, cb);
             /*.exec().then(result =>
             {
-                res.status(200).json(
+                res.status(200).json(result);
                 {
                     message: "Deleted listings",
                     request:
@@ -285,7 +285,7 @@ router.delete('/:artisanId', (req, res, next) => {
             Meeting.deleteMany({ artisan: art}, cb);
             /*.exec().then(result =>
             {
-                res.status(200).json(
+                res.status(200).json(result);
                 {
                     message: "Deleted meetings",
                     request:
@@ -309,7 +309,8 @@ router.delete('/:artisanId', (req, res, next) => {
         {
             Artisan.deleteOne({ _id: art}, cb).exec().then(result => 
             {
-                res.status(200).json(
+                res.status(200).json(result);
+                /*
                 {
                     message: 'Artisan deleted',
                     request: 
@@ -318,6 +319,7 @@ router.delete('/:artisanId', (req, res, next) => {
                         url: "http://localhost:3000/artisans"//,
                     }
                 });
+                */
             })
             .catch(err =>
             {
