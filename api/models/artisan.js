@@ -12,7 +12,6 @@ const artisanSchema = mongoose.Schema( {
     creation_date: { type: Date, required: true}
 });
 
-/*
 artisanSchema.pre("remove", async function(next)
 {
     try
@@ -26,6 +25,5 @@ artisanSchema.pre("remove", async function(next)
         next(err);
     }
 });
-*/
 
 module.exports = mongoose.model('Artisan', artisanSchema);
