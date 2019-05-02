@@ -40,6 +40,7 @@ describe("Tests artisan", function()
 
         async.series(
         [
+            /** CREATION */
             //create user
             function(cb)
             {
@@ -141,6 +142,8 @@ describe("Tests artisan", function()
                     .expect(200, cb);
             },
 
+            /** DELETION */
+
             //deletes artisan
             function(cb)
             {
@@ -153,7 +156,7 @@ describe("Tests artisan", function()
             function(cb)
             {
                 request(app)
-                    .get("/artisans" + art)
+                    .get("/artisans/" + art)
                     .expect(404, cb);
             },
 

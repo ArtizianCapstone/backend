@@ -215,9 +215,10 @@ router.patch('/:artisanID', (req, res, next) =>
 
 router.delete('/:artisanId', (req, res, next) => {
     //delete listngs
+    
     //delete meetings
     //delete artisan
-    Artisan.remove({_id: req.params.artisanId })
+    Artisan.deleteMany({_id: req.params.artisanId })
         .exec()
         .then( result => {
             res.status(200).json({
@@ -230,43 +231,5 @@ router.delete('/:artisanId', (req, res, next) => {
             });
         })
 });
-
-
-/*
-//update artisan
-router.patch('/:artisanID', (req, res, next) => 
-{
-    const id = req.params.artisanID;
-    const updateOps = {};
-    for (const ops of req.body)
-    {
-        updateOps[ops.propName] = ops.value;
-    }
-    //find by ID
-    Artisan.update(
-    {
-        _id: id
-    },
-    {
-        //set each member
-        $set: updateOps
-    })
-    .exec()
-    .then(result =>
-    {
-        console.log(result);
-        res.status(200).json(result);
-    })
-    .catch(err =>
-    {
-        console.log(err);
-        res.status(500).json(
-        {
-            error: err
-        });
-    });
-});
-*/
-
 
 module.exports = router;
