@@ -254,7 +254,7 @@ router.delete('/:artisanId', (req, res, next) => {
             {
                 if (err) return next(err);
                 artisan.remove();
-            }
+            })
             if (err) return next(err);
         })
     });
