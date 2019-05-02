@@ -309,8 +309,7 @@ router.delete('/:artisanId', (req, res, next) => {
         {
             Artisan.deleteOne({ _id: art }, cb).exec().then(result => 
             {
-                res.status(200).json(result);
-                /*
+                res.status(200).json(
                 {
                     message: 'Artisan deleted',
                     request: 
@@ -319,7 +318,6 @@ router.delete('/:artisanId', (req, res, next) => {
                         url: "http://localhost:3000/artisans"//,
                     }
                 });
-                */
             })
             .catch(err =>
             {
