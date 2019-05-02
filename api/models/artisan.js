@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Listing = require("listing");
-const Meeting = require("meeting");
+const Listing = require("./listing");
+const Meeting = require("./meeting");
 
 const artisanSchema = mongoose.Schema( {
     _id: mongoose.Schema.Types.ObjectId,
