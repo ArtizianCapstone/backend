@@ -2,6 +2,7 @@
 console.log("testing artisans");
 
 var request = require("supertest");
+var async = require("async");
 var app = require('../app');
 
 describe("Tests artisan", function()
@@ -130,7 +131,7 @@ describe("Tests artisan", function()
                     })
                     .expect(res => meet2 = res.body.createdMeeting._id)
                     .expect(201, cb);
-            },
+            }
         ], done);
     });
 });
