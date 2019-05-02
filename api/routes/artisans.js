@@ -240,19 +240,27 @@ router.patch('/:artisanID', (req, res, next) =>
 
 router.delete('/:artisanId', (req, res, next) => {
     var art = req.params.artisanId;
-
-    //delete listngs
-    /*
-    Artisan.deleteOne({_id: art }, function(err1)
+    Artisan.findById(art, (err, artisan) =>
     {
-        //delete meetings
-        Meeting.deleteMany({ artisan: art }, function(err2)
+        Metting.remove(
         {
-            //delete artisan
-            Listing.deleteMany({ artisan: art });
-        });
-    })*/
+            "_id": { $in: artisan._id }
+        }, (err, artisan) =>
+        {
+            Listing.remove(
+            {
+                "_id": { $in: artisan._id }
+            }, err =>
+            {
+                if (err) return next(err);
+                artisan.remove();
+            }
+            if (err) return next(err);
+        })
+    });
 
+
+/*
     async.series(
     [
         function(cb)
@@ -278,7 +286,6 @@ router.delete('/:artisanId', (req, res, next) => {
                     error: err
                 });
             });
-            */
         },
         function(cb)
         {
@@ -303,7 +310,6 @@ router.delete('/:artisanId', (req, res, next) => {
                     error: err
                 });
             });
-            */
         },
         function(cb)
         {
@@ -319,7 +325,6 @@ router.delete('/:artisanId', (req, res, next) => {
                         url: "http://localhost:3000/artisans"//,
                     }
                 });
-                */
             })
             .catch(err =>
             {
@@ -330,6 +335,7 @@ router.delete('/:artisanId', (req, res, next) => {
                 });
             });
         }
+        */
     ]);
 });
 
