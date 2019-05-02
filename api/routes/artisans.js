@@ -307,9 +307,10 @@ router.delete('/:artisanId', (req, res, next) => {
         },
         function(cb)
         {
-            Artisan.deleteOne({ _id: art }, cb).exec().then(result => 
+            Artisan.deleteOne({ _id: art }).exec().then(result => 
             {
-                res.status(200).json(
+                res.status(200).json(result);
+                /*
                 {
                     message: 'Artisan deleted',
                     request: 
@@ -326,6 +327,7 @@ router.delete('/:artisanId', (req, res, next) => {
                 {
                     error: err
                 });
+            */
             });
         }
     ], next);
