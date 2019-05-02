@@ -330,7 +330,7 @@ router.delete('/:artisanId', (req, res, next) => {
                 });
             });
         }
-    ], next);
+    ]);
 });
 
 module.exports = router;
