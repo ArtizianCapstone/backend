@@ -242,7 +242,7 @@ router.delete('/:artisanId', (req, res, next) => {
     var art = req.params.artisanId;
     Artisan.remove({ _id: art }).exec().then(result => 
     {
-        res.status(200).json(result)
+        res.status(200).json(
         {
             message: 'Artisan deleted',
             request: 
