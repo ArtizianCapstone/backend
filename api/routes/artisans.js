@@ -335,8 +335,8 @@ router.delete('/:artisanId', (req, res, next) => {
                 });
             });
         }
-        */
     ]);
+    */
 });
 
 module.exports = router;
