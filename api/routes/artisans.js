@@ -232,6 +232,14 @@ router.delete('/:artisanId', (req, res, next) => {
                     //body: { ProductId: 'ID', quantity: 'Number'}
                 }
             });
+        })
+        .catch(err =>
+        {
+            console.log(err);
+            res.status(500).json(
+            {
+                error: err
+            });
         });
 });
 

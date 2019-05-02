@@ -20,19 +20,12 @@ describe("Test Framework", function()
             creation_date: current_date
         });
 
-        console.log("created user");
-
         usr.save()
             .then(function()
             {
-                console.log("before assert");
                 assert(usr.isNew === false);
                 done();
-                console.log("After done");
             });
 
-        console.log("after save action");
     });
-
-    console.log("after first test");
 });

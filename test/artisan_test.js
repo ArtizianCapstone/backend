@@ -1,6 +1,4 @@
 //unit tests for artisans
-console.log("testing artisans");
-
 var request = require("supertest");
 var async = require("async");
 var app = require('../app');
