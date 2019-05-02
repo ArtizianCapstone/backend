@@ -238,35 +238,40 @@ router.patch('/:artisanID', (req, res, next) =>
 
 
 router.delete('/:artisanId', (req, res, next) => {
+    var art = req.params.artisanId;
+
     //delete listngs
-    Artisan.deleteOne({_id: req.params.artisanId }, function(err1)
+    /*
+    Artisan.deleteOne({_id: art }, function(err1)
     {
         //delete meetings
-        Meeting.deleteMany({ artisan: req.params.artisanId }, function(err2)
+        Meeting.deleteMany({ artisan: art }, function(err2)
         {
             //delete artisan
-            Listing.deleteMany({ artisan: req.params.artisanId });
+            Listing.deleteMany({ artisan: art });
         });
-    })
-    .exec()
-    .then( result => {
-        res.status(200).json({
-            message: 'Artisan deleted',
-            request: {
-                type: "POST",
-                url: "http://localhost:3000/orders"//,
-                //body: { ProductId: 'ID', quantity: 'Number'}
-            }
-        });
-    })
-    .catch(err =>
-    {
-        console.log(err);
-        res.status(500).json(
+    })*/
+    Artisan
+        .deleteOne({ _id: art})
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: 'Artisan deleted',
+                request: {
+                    type: "POST",
+                    url: "http://localhost:3000/orders"//,
+                    //body: { ProductId: 'ID', quantity: 'Number'}
+                }
+            });
+        })
+        .catch(err =>
         {
-            error: err
+            console.log(err);
+            res.status(500).json(
+            {
+                error: err
+            });
         });
-    });
 });
 
 module.exports = router;
