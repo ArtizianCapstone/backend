@@ -213,6 +213,14 @@ router.patch('/:artisanID', (req, res, next) =>
 });
 
 
+//cascade effect
+artisanSchema.pre("remove", function(next)
+{
+    Listing.deleteMany({artisan: this._id}).exec();
+    Meeting.deleteMany({artisan: this._id}).exec();
+    next();
+});
+
 router.delete('/:artisanId', (req, res, next) => {
     //delete listngs
     
