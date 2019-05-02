@@ -239,13 +239,13 @@ router.patch('/:artisanID', (req, res, next) =>
 
 router.delete('/:artisanId', (req, res, next) => {
     //delete listngs
-    Listing.deleteMany({ artisan: req.params.artisanId }, function(err1)
+    Artisan.deleteOne({_id: req.params.artisanId }, function(err1)
     {
         //delete meetings
         Meeting.deleteMany({ artisan: req.params.artisanId }, function(err2)
         {
             //delete artisan
-            Artisan.deleteOne({_id: req.params.artisanId });
+            Listing.deleteMany({ artisan: req.params.artisanId });
         });
     })
     .exec()
