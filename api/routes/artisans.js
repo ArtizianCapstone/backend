@@ -218,7 +218,7 @@ router.delete('/:artisanId', (req, res, next) => {
     
     //delete meetings
     //delete artisan
-    Artisan.deleteMany({_id: req.params.artisanId })
+    Artisan.deleteOne({_id: req.params.artisanId })
         .exec()
         .then( result => {
             res.status(200).json({

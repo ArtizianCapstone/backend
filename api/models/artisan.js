@@ -10,4 +10,11 @@ const artisanSchema = mongoose.Schema( {
     creation_date: { type: Date, required: true}
 });
 
+artisanSchema.pre("remove", function(next)
+{
+    Listing.deleteMany({artisan: this._id}).exec();
+    Metting.deleteMany({artisan: this._id}).exec();
+    next();
+});
+
 module.exports = mongoose.model('Artisan', artisanSchema);
