@@ -145,11 +145,34 @@ router.post('/noimage', (req, res, next) => {
                 error: err
             });
         });
-    });
+});
 
 
 
 router.get('/:artisanId', (req, res, next) => {
+    const id = req.params.artisanId;
+    Artisan.findById(id)
+        .populate("User")
+        .exec()
+        .then(doc =>
+        {
+            console.log("From database", doc);
+            if (doc)
+            {
+                res.status(200).json(doc);
+            }
+            else
+            {
+                res.status(404).json({message: "No valid entry found for provided ID"});
+            }
+        })
+        .catch(err => 
+        {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+        
+        /*
     Artisan.findById(req.params.artisanId)
         .populate( 'User')
         .exec()
@@ -168,6 +191,7 @@ router.get('/:artisanId', (req, res, next) => {
                 error: err
             });
         });
+        */
 });
 
 /*
@@ -215,10 +239,10 @@ router.patch('/:artisanID', (req, res, next) =>
 
 router.delete('/:artisanId', (req, res, next) => {
     //delete listngs
-    Listing.deleteMany({ artisan: req.params.artisanId }, function(err)
+    Listing.deleteMany({ artisan: req.params.artisanId }, function(err1)
     {
         //delete meetings
-        Meeting.deleteMany({ artisan: req.params.artisanId }, function(err)
+        Meeting.deleteMany({ artisan: req.params.artisanId }, function(err2)
         {
             //delete artisan
             Artisan.deleteOne({_id: req.params.artisanId });
