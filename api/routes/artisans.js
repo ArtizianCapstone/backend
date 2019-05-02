@@ -257,7 +257,8 @@ router.delete('/:artisanId', (req, res, next) => {
     [
         function(cb)
         {
-            Listing.deleteMany({ artisan: art}, cb).exec().then(result =>
+            Listing.deleteMany({ artisan: art}, cb);
+            /*.exec().then(result =>
             {
                 res.status(200).json(
                 {
@@ -277,10 +278,12 @@ router.delete('/:artisanId', (req, res, next) => {
                     error: err
                 });
             });
+            */
         },
         function(cb)
         {
-            Meeting.deleteMany({ artisan: art}, cb).exec().then(result =>
+            Meeting.deleteMany({ artisan: art}, cb);
+            /*.exec().then(result =>
             {
                 res.status(200).json(
                 {
@@ -300,6 +303,7 @@ router.delete('/:artisanId', (req, res, next) => {
                     error: err
                 });
             });
+            */
         },
         function(cb)
         {
