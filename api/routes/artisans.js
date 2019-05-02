@@ -242,7 +242,7 @@ router.delete('/:artisanId', (req, res, next) => {
     var art = req.params.artisanId;
     Artisan.findById(art, (err, artisan) =>
     {
-        Metting.remove(
+        Meeting.remove(
         {
             "_id": { $in: artisan._id }
         }, (err, artisan) =>

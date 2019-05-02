@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-//const Listing = require("./listing");
-//const Meeting = require("./meeting");
+const Listing = require("./listing");
+const Meeting = require("./meeting");
 
 const artisanSchema = mongoose.Schema( {
     _id: mongoose.Schema.Types.ObjectId,
@@ -13,11 +13,18 @@ const artisanSchema = mongoose.Schema( {
 });
 
 /*
-artisanSchema.pre("delteOne", function(next)
+artisanSchema.pre("remove", async function(next)
 {
-    Listing.deleteMany({artisan: this._id}).exec();
-    Meeting.deleteMany({artisan: this._id}).exec();
-    next();
+    try
+    {
+        await Listing.remove({artisan: this._id});
+        await Meeting.remove({artisan: this._id});
+        next();
+    }
+    catch(err)
+    {
+        next(err);
+    }
 });
 */
 
