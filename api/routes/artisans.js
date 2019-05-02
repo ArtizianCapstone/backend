@@ -7,6 +7,7 @@ const Artisan = require('../models/artisan');
 const User = require('../models/user');
 const Meeting = require('../models/artisan');
 const Listing = require('../models/listing');
+const async = require("async");
 
 var uploadFramework = require('./uploadFramework');
 const upload = uploadFramework.upload;
@@ -251,27 +252,79 @@ router.delete('/:artisanId', (req, res, next) => {
             Listing.deleteMany({ artisan: art });
         });
     })*/
-    Artisan
-        .deleteOne({ _id: art})
-        .exec()
-        .then( result => {
-            res.status(200).json({
-                message: 'Artisan deleted',
-                request: {
-                    type: "POST",
-                    url: "http://localhost:3000/orders"//,
-                    //body: { ProductId: 'ID', quantity: 'Number'}
-                }
-            });
-        })
-        .catch(err =>
+
+    async.series(
+    [
+        function(cb)
         {
-            console.log(err);
-            res.status(500).json(
+            Listing.deleteMany({ artisan: art}, cb).exec().then(result =>
             {
-                error: err
+                res.status(200).json(
+                {
+                    message: "Deleted listings"
+                    request:
+                    {
+                        type: "DELETE",
+                        url: "http://localhost:3000/artisans"
+                    }
+                });
+            })
+            .catch(err =>
+            {
+                console.log(err);
+                res.status(500).json(
+                {
+                    error: err
+                });
             });
-        });
+        },
+        function(cb)
+        {
+            Meeting.deleteMany({ artisan: art}, cb).exec().then(result =>
+            {
+                res.status(200).json(
+                {
+                    message: "Deleted meetings"
+                    request:
+                    {
+                        type: "DELETE",
+                        url: "http://localhost:3000/artisans"
+                    }
+                });
+            })
+            .catch(err =>
+            {
+                console.log(err);
+                res.status(500).json(
+                {
+                    error: err
+                });
+            });
+        },
+        function(cb)
+        {
+            Artisan.deleteOne({ _id: art}, cb).exec().then(result => 
+            {
+                res.status(200).json(
+                {
+                    message: 'Artisan deleted',
+                    request: 
+                    {
+                        type: "DELETE",
+                        url: "http://localhost:3000/artisans"//,
+                    }
+                });
+            })
+            .catch(err =>
+            {
+                console.log(err);
+                res.status(500).json(
+                {
+                    error: err
+                });
+            });
+        }
+    ]);
 });
 
 module.exports = router;
