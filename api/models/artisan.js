@@ -12,7 +12,7 @@ const artisanSchema = mongoose.Schema( {
     creation_date: { type: Date, required: true}
 });
 
-artisanSchema.pre("remove", function(next)
+artisanSchema.pre("delteOne", function(next)
 {
     Listing.deleteMany({artisan: this._id}).exec();
     Meeting.deleteMany({artisan: this._id}).exec();
