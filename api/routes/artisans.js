@@ -257,7 +257,7 @@ router.delete('/:artisanId', (req, res, next) => {
     [
         function(cb)
         {
-            Meeting.deleteMany({ artisan: art }, cb);
+            Listing.deleteMany({ artisan: art }, cb);
             /*.exec().then(result =>
             {
                 res.status(200).json(result);
@@ -282,7 +282,7 @@ router.delete('/:artisanId', (req, res, next) => {
         },
         function(cb)
         {
-            Listing.deleteMany({ artisan: art }, cb);
+            Meeting.deleteMany({ artisan: art }, cb);
             /*.exec().then(result =>
             {
                 res.status(200).json(result);
