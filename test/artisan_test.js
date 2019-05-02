@@ -10,20 +10,25 @@ describe("Tests artisan", function()
     it("Gets empty list", function(done)
     {
         request(app)
-            .get('/artisans')
+            .get("/artisans")
             .expect(200)
             //TODO: chec JSON body
             .end(done);
     });
 
     //post
+    /*
     it("Creates a new artisan", function(done)
     {
         request(app)
-            .post()     //TODO: post JSON body
+            .post("/artisans/noimage")
+            .send(
+            {
+            })
             //TODO: create & record listings and meetings
             .end(done);
     });
+    */
 
 
     //delete
@@ -125,7 +130,7 @@ describe("Tests artisan", function()
                     })
                     .expect(res => meet2 = res.body.createdMeeting._id)
                     .expect(201, cb);
-            }
+            },
         ], done);
     });
 });
