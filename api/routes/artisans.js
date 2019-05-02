@@ -261,7 +261,7 @@ router.delete('/:artisanId', (req, res, next) => {
             {
                 res.status(200).json(
                 {
-                    message: "Deleted listings"
+                    message: "Deleted listings",
                     request:
                     {
                         type: "DELETE",
@@ -284,7 +284,7 @@ router.delete('/:artisanId', (req, res, next) => {
             {
                 res.status(200).json(
                 {
-                    message: "Deleted meetings"
+                    message: "Deleted meetings",
                     request:
                     {
                         type: "DELETE",
@@ -324,7 +324,7 @@ router.delete('/:artisanId', (req, res, next) => {
                 });
             });
         }
-    ]);
+    ], next);
 });
 
 module.exports = router;
