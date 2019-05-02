@@ -6,6 +6,7 @@ const artisanSchema = mongoose.Schema( {
     name: {type: String, required: true},
     bio: {type: String, required: false},
     phone_number: { type: String, required: false},
+    image: {type: String, required: false},
     creation_date: { type: Date, required: true}
 });
 

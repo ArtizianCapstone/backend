@@ -7,6 +7,11 @@ const mongoose = require('mongoose');
 const userRoutes = require('./api/routes/users');
 const artisanRoutes = require('./api/routes/artisans');
 const listingRoutes = require('./api/routes/listings');
+const meetingRoutes = require('./api/routes/meetings');
+const orderRoutes = require('./api/routes/orders');
+
+mongoose.Promise = global.Promise;
+
 
 mongoose.connect(
     'mongodb://jkurtz678:'+
@@ -14,12 +19,11 @@ mongoose.connect(
     '@artizian-shard-00-00-kdklx.mongodb.net:27017,artizian-shard-00-01-kdklx.mongodb.net:27017,artizian-shard-00-02-kdklx.mongodb.net:27017/test?ssl=true&replicaSet=Artizian-shard-0&authSource=admin&retryWrites=true',
     {
         useNewUrlParser: true
-    }
-);
+    });
 
-mongoose.Promise = global.Promise;
 
-app.use( morgan('dev'));
+app.use(morgan('dev'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -33,9 +37,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/users', userRoutes );
+app.use('/users', userRoutes);
 app.use('/artisans', artisanRoutes);
 app.use('/listings', listingRoutes);
+app.use('/meetings', meetingRoutes);
+app.use('/orders', orderRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Endpoint not found');

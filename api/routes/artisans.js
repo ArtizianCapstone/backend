@@ -1,3 +1,4 @@
+require('./smsFramework')();
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -5,10 +6,27 @@ const mongoose = require('mongoose');
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
 
+var uploadFramework = require('./uploadFramework');
+const upload = uploadFramework.upload;
 
 router.get('/', (req, res, next) => {
     Artisan.find()
-        .select('_id name bio phone_number creation_date')
+        .select('_id name bio phone_number image creation_date')
+        .populate('user', 'name')
+        .exec()
+        .then(docs => {
+            res.status(200).json(docs);
+        })
+        .catch(err =>{ 
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+/*
+router.get('/', (req, res, next) => {
+    Artisan.find()
+        .select('_id name bio phone_number image creation_date')
         .populate('user', 'name')
         .exec()
         .then(docs => {
@@ -21,12 +39,8 @@ router.get('/', (req, res, next) => {
                         name: doc.name,
                         bio: doc.bio,
                         phone_number: doc.phone_number,
-                        creation_date: doc.creation_date,
-                        request: {
-                            use: 'Get specific artisan',
-                            type: 'GET',
-                            url: 'http://localhost:3000/artisans/' + doc._id
-                        }
+                        image: doc.image,
+                        creation_date: doc.creation_date, 
                     }
                 })
             });
@@ -37,54 +51,56 @@ router.get('/', (req, res, next) => {
             });
         });
 });
-/*
-router.post('/', (req, res, next) => {
-   var currentDate = new Date();
-    User.findById( req.body.userId)
-        .then(user => {
-            if( !user)  {
-                return res.status(404).json({
-                    message: "User not found"
-                });
-            }
-            const artisan = new Artisan({
-                _id: mongoose.Types.ObjectId(),
-                user: req.body.userId,
-                name: req.body.name,
-                bio: req.body.bio,
-                phone_number: req.body.phone_number,
-                creation_date: currentDate
-            });
-            return artisan.save();
-        })
-        .then(result => { 
-            console.log( result);
-            res.status(201).json({
-                message: 'Artisan stored',
-                createdOrder: {
-                    _id: result._id,
-                    user: result.user,
-                    name: result.name,
-                    bio: result.bio,
-                    phone_number: result.phone_number,
-                    creation_date: result.creation_date,
-                },
-                request: {
-                    use: 'Get specific artisan',
-                    type: 'GET',
-                    url: 'http://localhost:3000/artisans/' + result._id
-                }
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-    });
 */
-router.post('/', (req, res, next) => {
+router.post('/', upload.single('image'), (req, res, next) => {
+   console.log(req.file);
+   var currentDate = new Date();
+    User.findById( req.body.userId)
+        .then(user => {
+            if( !user)  {
+                return res.status(404).json({
+                    message: "User not found"
+                });
+            }
+            const artisan = new Artisan({
+                _id: mongoose.Types.ObjectId(),
+                user: req.body.userId,
+                name: req.body.name,
+                bio: req.body.bio,
+                phone_number: req.body.phone_number,
+                image: req.file.path,
+                creation_date: currentDate
+            });
+            return artisan.save();
+        })
+        .then(result => { 
+            //console.log(testSmsFramework(4)); 
+             
+            User.findById(result.user).then( function(myDoc) { addArtisanText(myDoc, result); }); 
+            
+            console.log( result);
+            res.status(201).json({
+                message: 'Artisan stored',
+                createdOrder: {
+                    _id: result._id,
+                    user: result.user,
+                    name: result.name,
+                    bio: result.bio,
+                    phone_number: result.phone_number,
+                    image: result.image,
+                    creation_date: result.creation_date,
+                }, 
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+    });
+
+router.post('/noimage', (req, res, next) => {
    var currentDate = new Date();
     User.findById( req.body.userId)
         .then(user => {
@@ -104,29 +120,10 @@ router.post('/', (req, res, next) => {
             return artisan.save();
         })
         .then(result => { 
-            var AWS = require('aws-sdk');
-            AWS.config.update({region: 'us-east-1'});
-            User.findById(result.user).then( function(myDoc) {
-                var messageParams =
-                {
-                   Message: "You have been added to an artisan group created by " + myDoc.name,
-                   PhoneNumber: '+' + result.phone_number
-                };
-
-                var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(messageParams).promise();
-
-                publishTextPromise.then(
-                   function(data)
-                   {
-                      console.log("MessageID is " + data.MessageID);
-                   })
-                   .catch(
-                      function(err)
-                      {
-                         console.error(err, err.stack);
-                      });
-
-            })
+            //console.log(testSmsFramework(4)); 
+             
+            //User.findById(result.user).then( function(myDoc) { addArtisanText(myDoc, result); }); 
+            
             console.log( result);
             res.status(201).json({
                 message: 'Artisan stored',
@@ -137,12 +134,7 @@ router.post('/', (req, res, next) => {
                     bio: result.bio,
                     phone_number: result.phone_number,
                     creation_date: result.creation_date,
-                },
-                request: {
-                    use: 'Get specific artisan',
-                    type: 'GET',
-                    url: 'http://localhost:3000/artisans/' + result._id
-                }
+                }, 
             });
         })
         .catch(err => {
@@ -152,6 +144,8 @@ router.post('/', (req, res, next) => {
             });
         });
     });
+
+
 
 router.get('/:artisanId', (req, res, next) => {
     Artisan.findById(req.params.artisanId)
@@ -164,12 +158,7 @@ router.get('/:artisanId', (req, res, next) => {
                 });
             }
             res.status(200).json({
-                artisan: artisan,
-                request: {
-                    use: 'Get all artisans.',
-                    type: 'GET',
-                    url: 'http://localhost:3000/artisans'
-                }
+                artisan: artisan
             });
         })
         .catch( err => {
@@ -179,11 +168,48 @@ router.get('/:artisanId', (req, res, next) => {
         });
 });
 
+/*
 router.patch('/:orderId', (req, res, next) => {
     res.status(200).json({
         message: 'Updated order!'
     });
 });
+*/
+
+//update artisan
+router.patch('/:artisanID', (req, res, next) => 
+{
+    const id = req.params.artisanID;
+    const updateOps = {};
+    for (const ops of req.body)
+    {
+        updateOps[ops.propName] = ops.value;
+    }
+    //find by ID
+    Artisan.update(
+    {
+        _id: id
+    },
+    {
+        //set each member
+        $set: updateOps
+    })
+    .exec()
+    .then(result =>
+    {
+        console.log(result);
+        res.status(200).json(result);
+    })
+    .catch(err =>
+    {
+        console.log(err);
+        res.status(500).json(
+        {
+            error: err
+        });
+    });
+});
+
 
 router.delete('/:artisanId', (req, res, next) => {
     Artisan.remove({_id: req.params.artisanId })
@@ -200,6 +226,40 @@ router.delete('/:artisanId', (req, res, next) => {
         })
 });
 
+
+//update artisan
+router.patch('/:artisanID', (req, res, next) => 
+{
+    const id = req.params.artisanID;
+    const updateOps = {};
+    for (const ops of req.body)
+    {
+        updateOps[ops.propName] = ops.value;
+    }
+    //find by ID
+    Artisan.update(
+    {
+        _id: id
+    },
+    {
+        //set each member
+        $set: updateOps
+    })
+    .exec()
+    .then(result =>
+    {
+        console.log(result);
+        res.status(200).json(result);
+    })
+    .catch(err =>
+    {
+        console.log(err);
+        res.status(500).json(
+        {
+            error: err
+        });
+    });
+});
 
 
 module.exports = router;

@@ -7,7 +7,7 @@ const Artisan = require( '../models/artisan')
 
 router.get('/', (req, res, next) => {
     User.find()
-        .select('name phone_number creation_date')
+        .select('name password phone_number creation_date')
         .exec()
         .then( docs => {
             const response = {
@@ -15,6 +15,7 @@ router.get('/', (req, res, next) => {
                 users: docs.map( doc => {
                     return {
                         _id: doc._id, 
+                        password: doc.password,
                         name: doc.name,
                         phone_number: doc.phone_number,
                         creation_date: doc.creation_date,
@@ -66,6 +67,7 @@ router.post('/', (req, res, next) => {
     var current_date = new Date()
     const user = new User( {
         _id: new mongoose.Types.ObjectId(),
+        password: req.body.password,
         name: req.body.name,
         phone_number: req.body.phone_number,
         creation_date: current_date
@@ -78,6 +80,7 @@ router.post('/', (req, res, next) => {
                 message: 'Created user successfully',
                 createdUser: {
                     _id: result._id,
+                    password: result.password,
                     name: result.name,
                     phone_number: result.phone_number,
                     creation_date: result.creation_date,
@@ -100,7 +103,7 @@ router.post('/', (req, res, next) => {
 router.get('/:userId', (req, res, next) => {
     const id = req.params.userId;
     User.findById(id)
-        .select( '_id name phone_number creation_date' )
+        .select( '_id password name phone_number creation_date' )
         .exec()
         .then(doc => {
             console.log("From database", doc);
@@ -127,7 +130,7 @@ router.get('/:userId', (req, res, next) => {
 router.get('/:userId/artisans', (req, res, next) => {
     const id = req.params.userId;
     Artisan.find({user: id})
-        .select('_id name bio phone_number creation_date')
+        .select('_id password name bio phone_number image creation_date')
         .exec()
         .then(doc => {
             console.log("From database", doc);
@@ -144,7 +147,41 @@ router.get('/:userId/artisans', (req, res, next) => {
         });
 });
 
+//update user
+router.patch('/:userID', (req, res, next) => 
+{
+    const id = req.params.userID;
+    const updateOps = {};
+    for (const ops of req.body)
+    {
+        updateOps[ops.propName] = ops.value;
+    }
+    //find by ID
+    User.update(
+    {
+        _id: id
+    },
+    {
+        //set each member
+        $set: updateOps
+    })
+    .exec()
+    .then(result =>
+    {
+        console.log(result);
+        res.status(200).json(result);
+    })
+    .catch(err =>
+    {
+        console.log(err);
+        res.status(500).json(
+        {
+            error: err
+        });
+    });
+});
 
+/*
 router.patch('/:userId', (req, res, next) => {
     const id = req.params.userId;
     const updateOps = {};
@@ -171,6 +208,7 @@ router.patch('/:userId', (req, res, next) => {
             });
         })
 });
+*/
 
 router.delete('/:userId', (req, res, next) => {
     const id = req.params.userId;
