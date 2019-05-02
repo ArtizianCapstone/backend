@@ -8,5 +8,6 @@ braches:
     only:
     - master
     - supertest
+    - cascade-artisan
 
 services: mongodb
