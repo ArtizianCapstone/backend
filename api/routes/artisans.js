@@ -232,7 +232,7 @@ router.delete('/:artisanId', (req, res, next) => {
                     //body: { ProductId: 'ID', quantity: 'Number'}
                 }
             });
-        })
+        });
 });
 
 module.exports = router;
