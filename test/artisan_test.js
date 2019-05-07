@@ -27,12 +27,11 @@ describe("Tests artisan", function()
                 phone_number: "555"
             })
             .expect(200)
-            .expect('Content-Type', /json/);
+            .expect('Content-Type', /json/)
             .end(done);
     });
 
 
-    /*
     //delete
     it("Deletes pertinent meetings and listings along with deleted artisan", function(done)
     {
@@ -190,53 +189,5 @@ describe("Tests artisan", function()
             }
         ], done);
     });
-    */
 });
 
-/*
-//create user
-function tempUser()
-{
-    var usr = 
-    { 
-        name: "Moneybags Morebucks",
-        password: "gr33d1sG00d",
-        phone_number: "3600"
-    };
-
-    var art1 =
-    {
-        name: "Toan Deph",
-        bio: "Half-orc bard",
-        phone_number: "9876"
-    };
-
-    request(app)
-        .post("/users")
-        .send(usr)
-        .then(res =>
-        {
-            var artisan = tempArtisan(res.body.createdUser._id, art1);
-        });
-}
-
-function tempArtisan(usr, info)
-{
-    var art =
-    {
-        userId: usr,
-        name: info.name,
-        bio: info.bio,
-        phone_number: info.phone_number
-    };
-
-    var artID;
-
-    request(app)
-        .post("/artisans/noimage")
-        .send(art)
-        .then(res => artID = res.body.createdOrder._id);
-
-    return artID;
-}
-*/
