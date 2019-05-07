@@ -26,7 +26,7 @@ describe("Tests artisan", function()
                 password: "gr33d1sg00d",
                 phone_number: "555"
             })
-            .expect(200)
+            .expect(201)
             .expect('Content-Type', /json/)
             .end(done);
     });
