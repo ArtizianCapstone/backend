@@ -16,20 +16,23 @@ describe("Tests artisan", function()
     });
 
     //post
-    /*
     it("Creates a new artisan", function(done)
     {
         request(app)
             .post("/artisans/noimage")
             .send(
             {
+                name: "Cash Moneybags",
+                password: "gr33d1sg00d",
+                phone_number: "555"
             })
-            //TODO: create & record listings and meetings
+            .expect(200);
+            .expect('Content-Type', /json/);
             .end(done);
     });
-    */
 
 
+    /*
     //delete
     it("Deletes pertinent meetings and listings along with deleted artisan", function(done)
     {
@@ -38,7 +41,7 @@ describe("Tests artisan", function()
 
         async.series(
         [
-            /** CREATION */
+            // CREATION 
             //create user
             function(cb)
             {
@@ -140,7 +143,7 @@ describe("Tests artisan", function()
                     .expect(200, cb);
             },
 
-            /** DELETION */
+            // DELETION 
 
             //deletes artisan
             function(cb)
@@ -187,6 +190,7 @@ describe("Tests artisan", function()
             }
         ], done);
     });
+    */
 });
 
 /*
