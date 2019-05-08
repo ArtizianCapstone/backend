@@ -11,24 +11,43 @@ describe("Tests artisan", function()
         request(app)
             .get("/artisans")
             .expect(200)
-            //TODO: chec JSON body
             .end(done);
     });
 
     //post
-    it("Creates a new artisan", function(done)
+    it("Creates a new artisan and finds with GET", function(done)
     {
-        request(app)
-            .post("/artisans/noimage")
-            .send(
+        var usr, art;
+        async.series(
+        [
+            cb =>
             {
-                name: "Cash Moneybags",
-                password: "gr33d1sg00d",
-                phone_number: "555"
-            })
-            .expect(201)
-            .expect('Content-Type', /json/)
-            .end(done);
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                        name: "Cash Moneybags",
+                        password: "gr33d1sg00d",
+                        phone_number: "555"
+                    })
+                    .expect(res => usr = res.body.createdUser._id)
+                    .expect(201, cb);
+            },
+            cb =>
+            {
+                request(app)
+                    .post("artisans/noimage")
+                    .send(
+                    {
+                        userId: usr,
+                        name: "Toan Deph",
+                        bio: "Half-orc bard",
+                        phone_number: "98754"
+                    })
+                    .expect(res => art = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            }
+        ], done);
     });
 
 
