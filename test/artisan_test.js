@@ -37,12 +37,11 @@ describe("Tests artisan", function()
                     //.set("Accept", "application/json")
                     .expect(res => usr = res.body.createdUser._id)
                     .expect(201, cb);
-                    console.log(usr);
             },
             function(cb)
             {
                 request(app)
-                    .post("artisans/noimage")
+                    .post("/artisans/noimage")
                     .send(
                     {
                         userId: usr,
