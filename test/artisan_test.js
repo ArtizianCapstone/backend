@@ -2,6 +2,8 @@
 var request = require("supertest");
 var async = require("async");
 var app = require('../app');
+var User = require("../api/routes/user");
+var Artisan = require("../api/routes/artisan");
 
 describe("Tests artisan", function()
 {
