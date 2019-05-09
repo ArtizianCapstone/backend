@@ -34,8 +34,12 @@ describe("Tests artisan", function()
                         password: "gr33d1sg00d",
                         phone_number: "555"
                     })
-                    .expect(res => usr = res.body.createdUser._id)
-                    .expect(res => assert(res.body.createdUser.name, "Cash Moneybags"))
+                    .expect(res => 
+                    {
+                        usr = res.body.createdUser._id;
+                        if (!("name" in res.body.createdUser))
+                            throw new Error("User missing name);
+                    })
                     .expect(201, cb);
             },
             function(cb)
