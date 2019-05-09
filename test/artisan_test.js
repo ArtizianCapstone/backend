@@ -10,8 +10,8 @@ describe("Tests artisan", function()
     {
         request(app)
             .get("/artisans")
-            .expect(200)
             .expect(res => res.body.count, "0")
+            .expect(200)
             .end(done);
     });
 
@@ -47,7 +47,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
-                    .expect(res => res.createdArtisan.user, usr)
+                    .expect(res => res.body.createdArtisan.user, usr)
                     .expect(201, cb);
             }
         ], done);
