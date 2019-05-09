@@ -50,8 +50,8 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
-                    .expect(res => res.body.createdArtisan.bio === "Half-orc bard")
-                    .expect(res => res.body.createdArtisan.user === usr)
+                    .expect(res => assert(res.body.createdArtisan.bio, "Half-orc bard"))
+                    .expect(res => assert(res.body.createdArtisan.user, usr))
                     .expect(201, cb);
             }
         ], done);
