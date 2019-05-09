@@ -11,7 +11,7 @@ describe("Tests artisan", function()
         request(app)
             .get("/artisans")
             .expect(200)
-            .expect(res => res.body.count.should.equal("0")
+            .expect(res => res.body.count.should.equal("0"))
             .end(done);
     });
 
