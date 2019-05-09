@@ -34,12 +34,7 @@ describe("Tests artisan", function()
                         password: "gr33d1sg00d",
                         phone_number: "555"
                     })
-                    .expect(res => 
-                    {
-                        usr = res.body.createdUser._id;
-                        if (!("name" in res.body.createdUser))
-                            throw new Error("User missing name");
-                    })
+                    .expect(res => usr = res.body.createdUser._id)
                     .expect(201, cb);
             },
             function(cb)
@@ -53,14 +48,7 @@ describe("Tests artisan", function()
                         bio: "Half-orc bard",
                         phone_number: "98754"
                     })
-                    .expect(res => 
-                    {
-                        art = res.body.createdArtisan._id;
-                        if (!("name" in res.body.createdArtisan))
-                            throw new Error("Artisan missing name");
-                        if (!("user" in res.body.createdArtisan))
-                            throw new Error("Artisan missing user");
-                    })
+                    .expect(res => art = res.body.createdArtisan._id)
                     .expect(201, cb);
             }
         ], done);
