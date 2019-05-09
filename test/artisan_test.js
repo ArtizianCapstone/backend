@@ -34,7 +34,7 @@ describe("Tests artisan", function()
                         phone_number: "555"
                     })
                     .expect(res => usr = res.body.createdUser._id)
-                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
+                    .expect(res => res.body.createdUser.name === "Cash Moneybags")
                     .expect(201, cb);
             },
             cb =>
