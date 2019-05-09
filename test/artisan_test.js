@@ -23,7 +23,7 @@ describe("Tests artisan", function()
         var usr, art;
         async.series(
         [
-            cb =>
+            function(cb)
             {
                 request(app)
                     .post("/users")
@@ -37,7 +37,7 @@ describe("Tests artisan", function()
                     .expect(res => res.body.createdUser.name === "Cash Moneybags")
                     .expect(201, cb);
             },
-            cb =>
+            function(cb)
             {
                 request(app)
                     .post("artisans/noimage")
