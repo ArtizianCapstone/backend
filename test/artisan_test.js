@@ -37,7 +37,7 @@ describe("Tests artisan", function()
                     //.set("Accept", "application/json")
                     .expect(res => usr = res.body.createdUser._id)
                     .expect(201)
-                    .expect(res => expect(res.body.ceatedUser.id).to.equal(usr))
+                    .expect(body.ceatedUser.id).to.equal(usr))
                     .end(cb);
             },
             function(cb)
