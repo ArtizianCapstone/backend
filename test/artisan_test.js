@@ -11,7 +11,7 @@ describe("Tests artisan", function()
         request(app)
             .get("/artisans")
             .expect(200)
-            .expect(res.body.count, "0")
+            .expect(res => res.body.count, "0")
             .end(done);
     });
 
@@ -32,7 +32,7 @@ describe("Tests artisan", function()
                         phone_number: "555"
                     })
                     .expect(res => usr = res.body.createdUser._id)
-                    .expect(res.body.createdUser.name, "Cash Moneybags")
+                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
                     .expect(201, cb);
             },
             cb =>
@@ -47,7 +47,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
-                    .expect(res.createdArtisan.user, usr)
+                    .expect(res => res.createdArtisan.user, usr)
                     .expect(201, cb);
             }
         ], done);
