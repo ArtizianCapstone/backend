@@ -50,13 +50,71 @@ describe("Tests artisan", function()
                         bio: "Half-orc bard",
                         phone_number: "98754"
                     })
-                    .expect(res => art = res.body.createdArtisan._id)
                     .expect(res => res.body.createdArtisan.user, usr)
                     .expect(201, cb);
             }
         ], done);
     });
 
+    //patch
+    it("Can update the properties of an Artisan", function(done)
+    {
+        var usr, art;
+        async.series(
+        [
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                        name: "Cash Moneybags",
+                        password: "gr33d1sg00d",
+                        phone_number: "555"
+                    })
+                    //.set("Accept", "application/json")
+                    .expect(res => usr = res.body.createdUser._id)
+                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans/noimage")
+                    .send(
+                    {
+                        userId: usr,
+                        name: "Toan Deph",
+                        bio: "Half-orc bard",
+                        phone_number: "98754"
+                    })
+                    .expect(res => art = res.body.createdArtisan._id)
+                    .expect(res => res.body.createdArtisan.name, "Toan Deph")
+                    .expect(res => res.body.createdArtisan.phone_number, "98754")
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .patch("/artisans/" + art)
+                    .send(
+                    [
+                        { propName: "name", value: "Someone Else" },
+                        { propName: "phone_number", value: "5"}
+                    ])
+                    .expect(res => res.body.nModified, "2")
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/artisans/" + art)
+                    .expect(res => res.body.name, "Someone Else")
+                    .expect(res => res.body.phone_number, "5")
+                    .expect(200, cb);
+            }
+        ], done);
+    });
 
     //delete
     it("Deletes pertinent meetings and listings along with deleted artisan", function(done)
