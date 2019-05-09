@@ -55,7 +55,7 @@ describe("Tests artisan", function()
                     })
                     .expect(res => 
                     {
-                        art = res.body.createdArtisan._id)
+                        art = res.body.createdArtisan._id;
                         if (!("name" in res.body.createdArtisan))
                             throw new Error("Artisan missing name");
                         if (!("user" in res.body.createdArtisan))
