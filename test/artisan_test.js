@@ -92,7 +92,7 @@ describe("Tests artisan", function()
                         bio: "Half-orc bard",
                         phone_number: "98754"
                     })
-                    .expect(res => art = res.body.createdOrder._id)
+                    .expect(res => art = res.body.createdArtisan._id)
                     .expect(201, cb);
             },
 
