@@ -18,6 +18,14 @@ describe("Tests artisan", function()
             .end(done);
     });
 
+    //get specific empty
+    it("Fails to get an artisan that doesn't exist", function(done)
+    {
+        request(app)
+            .get("/artisans/111111111111111111111111")
+            .expect(404, done);
+    });
+
     //post
     it("Creates a new artisan and finds with GET", function(done)
     {
