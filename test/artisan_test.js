@@ -34,7 +34,7 @@ describe("Tests artisan", function()
                         password: "gr33d1sg00d",
                         phone_number: "555"
                     })
-                    .set("Accept", "application/json")
+                    //.set("Accept", "application/json")
                     .expect(res => usr = res.body.createdUser._id)
                     .expect(201, cb);
             },
