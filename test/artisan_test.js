@@ -7,7 +7,6 @@ var Artisan = require("../api/models/artisan");
 
 describe("Tests artisan", function()
 {
-    var usr, art, list1, list2, meet1, meet2;
     //get
     it("Gets empty list", function(done)
     {
@@ -21,6 +20,7 @@ describe("Tests artisan", function()
     //post
     it("Creates a new artisan and finds with GET", function(done)
     {
+        var usr, art;
         async.series(
         [
             cb =>
@@ -49,6 +49,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
+                    .expect(res => res.body.createdArtisan.bio === "Half-orc bard")
                     .expect(res => res.body.createdArtisan.user === usr)
                     .expect(201, cb);
             }
@@ -59,11 +60,11 @@ describe("Tests artisan", function()
     //delete
     it("Deletes pertinent meetings and listings along with deleted artisan", function(done)
     {
+        var usr, art, list1, list2, meet1, meet2;
         var today = new Date();
 
         async.series(
         [
-        /*
             // CREATION 
             //create user
             function(cb)
@@ -95,7 +96,6 @@ describe("Tests artisan", function()
                     .expect(res => art = res.body.createdOrder._id)
                     .expect(201, cb);
             },
-            */
 
             //create listings
             function(cb)
