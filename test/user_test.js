@@ -29,3 +29,7 @@ describe("Test Framework", function()
 
     });
 });
+
+describe("Tests the User request handling", function()
+{
+});
