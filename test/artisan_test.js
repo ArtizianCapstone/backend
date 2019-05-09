@@ -49,7 +49,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
-                    .expect(201);
+                    .expect(201, cb);
             }
         ], done);
     });
