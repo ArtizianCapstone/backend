@@ -65,7 +65,7 @@ describe("Tests artisan", function()
     });
 
     //patch
-    it("Can update the properties of an Artisan", function(done)
+    it("Can iteratively update the properties of an Artisan", function(done)
     {
         var usr, art;
         async.series(
@@ -110,7 +110,7 @@ describe("Tests artisan", function()
                         { propName: "name", value: "Someone Else" },
                         { propName: "phone_number", value: "5"}
                     ])
-                    .expect(res => res.body.nModified, "2")
+                    .expect(res => res.body.nModified, "1")
                     .expect(200, cb);
             },
             function(cb)
