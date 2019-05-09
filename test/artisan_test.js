@@ -36,9 +36,8 @@ describe("Tests artisan", function()
                     })
                     //.set("Accept", "application/json")
                     .expect(res => usr = res.body.createdUser._id)
-                    .expect(201)
-                    .expect(body.ceatedUser.id).to.equal(usr))
-                    .end(cb);
+                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
+                    .expect(201, cb);
             },
             function(cb)
             {
@@ -52,6 +51,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
+                    .expect(res => res.body.createdArtisan.user, usr)
                     .expect(201, cb);
             }
         ], done);
