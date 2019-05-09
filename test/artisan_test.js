@@ -33,11 +33,8 @@ describe("Tests artisan", function()
                         password: "gr33d1sg00d",
                         phone_number: "555"
                     })
-                    .expect(res => 
-                    {
-                        usr = res.body.createdUser._id;
-                        expect(res.body.createdUser.name).to.be.equal("Cash Moneybags");
-                    })
+                    .expect(res => usr = res.body.createdUser._id)
+                    .expect(res => res.body.createdUser.name).to.be.equal("Cash Moneybags")
                     .expect(201, cb);
             },
             function(cb)
