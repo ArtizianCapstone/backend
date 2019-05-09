@@ -36,7 +36,7 @@ describe("Tests artisan", function()
                     .expect(res => 
                     {
                         usr = res.body.createdUser._id;
-                        expect(res.body.createdUser.name).to.be.equal("Cash Moneybags"));
+                        expect(res.body.createdUser.name).to.be.equal("Cash Moneybags");
                     })
                     .expect(201, cb);
             },
