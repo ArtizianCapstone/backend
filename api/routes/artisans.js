@@ -130,7 +130,7 @@ router.post('/noimage', (req, res, next) => {
             console.log( result);
             res.status(201).json({
                 message: 'Artisan stored',
-                createdOrder: {
+                createdArtisan: {
                     _id: result._id,
                     user: result.user,
                     name: result.name,
