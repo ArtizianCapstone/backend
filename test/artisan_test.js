@@ -141,7 +141,7 @@ describe("Tests artisan", function()
             {
                 request(app)
                     .get("/artisans")
-                    .expect(res.body.count, "3")
+                    .expect(res => res.body.count, "3")
                     .expect(200, cb);
             },
             function(cb)

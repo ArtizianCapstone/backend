@@ -2,8 +2,9 @@
 const assert = require('assert');
 const mongoose = require('mongoose');
 var request = require("supertest");
+var app = require('../app');
 var async = require("async");
-//const User = require('../api/models/user');
+const User = require('../api/models/user');
 
 describe("Test Framework", function()
 {
