@@ -66,7 +66,7 @@ describe("Tests the User request handling", function()
                     .send(
                     {
                         name: "Cash Moneybags",
-                        phone_number: "555"
+                        phone_number: "555",
                         password: "gr33d1sg00d",
                     })
                     //.set("Accept", "application/json")
