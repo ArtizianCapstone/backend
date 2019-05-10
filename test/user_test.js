@@ -257,7 +257,7 @@ describe("Tests the User request handling", function()
             function(cb)
             {
                 request(app)
-                    .post("/artisans")
+                    .post("/artisans/noimage")
                     .send(
                     {
                         userId: u1,
@@ -271,7 +271,7 @@ describe("Tests the User request handling", function()
             function(cb)
             {
                 request(app)
-                    .post("/artisans")
+                    .post("/artisans/noimage")
                     .send(
                     {
                         userId: u2,
@@ -285,7 +285,7 @@ describe("Tests the User request handling", function()
             function(cb)
             {
                 request(app)
-                    .post("/artisans")
+                    .post("/artisans/noimage")
                     .send(
                     {
                         userId: u2,
