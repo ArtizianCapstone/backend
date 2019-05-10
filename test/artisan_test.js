@@ -23,7 +23,8 @@ describe("Tests artisan", function()
     {
         request(app)
             .get("/artisans/111111111111111111111111")
-            .expect(404, done);
+            .expect(404)
+            .end(done);
     });
 
     //post
@@ -380,6 +381,15 @@ describe("Tests artisan", function()
                     .expect(404, cb);
             }
         ], done);
+    });
+
+    //deletes nonexistant?
+    it("Fails to delete an artisan that doesn't exist", function(done)
+    {
+        request(app)
+            .del("/artisans/111111111111111111111111")
+            .expect(500)
+            .end(done);
     });
 });
 

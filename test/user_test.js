@@ -219,4 +219,132 @@ describe("Tests the User request handling", function()
             }
         ], done);
     });
+
+    it("Can get artisans by user", function(done)
+    {
+        var u1, u2, a1, a2, a3;
+        async.series(
+        [
+            //build users
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                        name: "Dylan Clandale",
+                        password: "First dog's name",
+                        phone_number: "789"
+                    })
+                    .expect(res => u1 = res.body.createdUser._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                        name: "Some Guy",
+                        password: "weak",
+                        phone_number: "0"
+                    })
+                    .expect(res => u2 = res.body.createdUser._id)
+                    .expect(res => res.body.createdUser.name, "Some Guy")
+                    .expect(201, cb);
+            },
+            //build artisans
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans")
+                    .send(
+                    {
+                        userId: u1,
+                        name: "Arsty",
+                        bio: "Never graduated",
+                        phone_number: "789"
+                    })
+                    .expect(res => a1 = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans")
+                    .send(
+                    {
+                        userId: u2,
+                        name: "Fartsy",
+                        bio: "Likes beans too much",
+                        phone_number: "22"
+                    })
+                    .expect(res => a2 = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans")
+                    .send(
+                    {
+                        userId: u2,
+                        name: "Smartsy",
+                        bio: "Can't even draw a stick figure",
+                        phone_number: "314265"
+                    })
+                    .expect(res => a3 = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            //find artisans by user
+            function(cb)
+            {
+                request(app)
+                    .get("/users/" + u2 + "/artisans")
+                    .expect(/"name": "Smartsy"/)
+                    .expect(/"name": "Fartsy"/)
+                    .expect(200, cb);
+            },
+            //delete all
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + u1)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + u2)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + a1)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + a2)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + a3)
+                    .expect(200, cb);
+            }
+        ], done);
+    });
+
+    //deletes nonexistant
+    it("Fails to get a user that doesn't exist", function(done)
+    {
+        request(app)
+            .del("/users/111111111111111111111111")
+            .expect(500)
+            .end(done);
+    });
 });
