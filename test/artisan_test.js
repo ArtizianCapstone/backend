@@ -388,7 +388,7 @@ describe("Tests artisan", function()
     {
         request(app)
             .del("/artisans/111111111111111111111111")
-            .expect(500)
+            .expect(200)
             .end(done);
     });
 });

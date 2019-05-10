@@ -215,7 +215,7 @@ describe("Tests the User request handling", function()
             {
                 request(app)
                     .del("/users/" + usr)
-                    .expect(200, cd);
+                    .expect(200, cb);
             }
         ], done);
     });
@@ -344,7 +344,7 @@ describe("Tests the User request handling", function()
     {
         request(app)
             .del("/users/111111111111111111111111")
-            .expect(500)
+            .expect(200)
             .end(done);
     });
 });
