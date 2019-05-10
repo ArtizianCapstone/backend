@@ -90,7 +90,7 @@ describe("Tests the User request handling", function()
                 request(app)
                     .get("/users/" + usr)
                     .expect(res => res.body.password, "gr33d1sg00d")
-                    .expect(201, cb);
+                    .expect(200, cb);
             },
             function(cb)
             {
