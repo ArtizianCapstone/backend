@@ -32,4 +32,52 @@ describe("Test Framework", function()
 
 describe("Tests the User request handling", function()
 {
+    //get
+    it("Gets empty list", function(done)
+    {
+        request(app)
+            .get("/users")
+            .expect(res => res.body.count, "0")
+            .expect(200)
+            .end(done);
+    });
+
+    //get specific empty
+    it("Fails to get an artisan that doesn't exist", function(done)
+    {
+        request(app)
+            .get("/artisans/111111111111111111111111")
+            .expect(404, done);
+    });
+
+    //post
+    it("Creates a new user and finds with GET", function(done)
+    {
+        var usr, art;
+        async.series(
+        [
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                        name: "Cash Moneybags",
+                        phone_number: "555"
+                        password: "gr33d1sg00d",
+                    })
+                    //.set("Accept", "application/json")
+                    .expect(res => usr = res.body.createdUser._id)
+                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/users/" + usr)
+                    .expect(res => res.body.password, "gr33d1sg00d")
+                    .expect(201, cb);
+            }
+        ], done);
+    });
 });

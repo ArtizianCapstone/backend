@@ -258,76 +258,16 @@ router.delete('/:artisanId', (req, res, next) => {
         function(cb)
         {
             Listing.deleteMany({ artisan: art }, cb);
-            /*.exec().then(result =>
-            {
-                res.status(200).json(result);
-                {
-                    message: "Deleted listings",
-                    request:
-                    {
-                        type: "DELETE",
-                        url: "http://localhost:3000/artisans"
-                    }
-                });
-            })
-            .catch(err =>
-            {
-                console.log(err);
-                res.status(500).json(
-                {
-                    error: err
-                });
-            });
-            */
         },
         function(cb)
         {
             Meeting.deleteMany({ artisan: art }, cb);
-            /*.exec().then(result =>
-            {
-                res.status(200).json(result);
-                {
-                    message: "Deleted meetings",
-                    request:
-                    {
-                        type: "DELETE",
-                        url: "http://localhost:3000/artisans"
-                    }
-                });
-            })
-            .catch(err =>
-            {
-                console.log(err);
-                res.status(500).json(
-                {
-                    error: err
-                });
-            });
-            */
         },
         function(cb)
         {
             Artisan.deleteOne({ _id: art }).exec().then(result => 
             {
                 res.status(200).json(result);
-                /*
-                {
-                    message: 'Artisan deleted',
-                    request: 
-                    {
-                        type: "DELETE",
-                        url: "http://localhost:3000/artisans"//,
-                    }
-                });
-            })
-            .catch(err =>
-            {
-                console.log(err);
-                res.status(500).json(
-                {
-                    error: err
-                });
-            */
             });
         }
     ], next);

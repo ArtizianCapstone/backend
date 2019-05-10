@@ -42,7 +42,6 @@ describe("Tests artisan", function()
                         password: "gr33d1sg00d",
                         phone_number: "555"
                     })
-                    //.set("Accept", "application/json")
                     .expect(res => usr = res.body.createdUser._id)
                     .expect(res => res.body.createdUser.name, "Cash Moneybags")
                     .expect(201, cb);
@@ -59,7 +58,85 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => res.body.createdArtisan.user, usr)
+                    .expect(res => art = res.body.createdArtisan._id)
                     .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/artisans/" + art)
+                    .expect(res => res.body.bio, "Half-orc bard")
+                    .expect(200, cb);
+            }
+        ], done);
+    });
+
+    it("Can get a list of artisans", function()
+    {
+        var usr, art;
+        async.series(
+        [
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                        name: "Cash Moneybags",
+                        password: "gr33d1sg00d",
+                        phone_number: "555"
+                    })
+                    .expect(res => usr = res.body.createdUser._id)
+                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans/noimage")
+                    .send(
+                    {
+                        userId: usr,
+                        name: "Toan Deph",
+                        bio: "Half-orc bard",
+                        phone_number: "98754"
+                    })
+                    .expect(res => res.body.createdArtisan.user, usr)
+                    .expect(res => art = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans/noimage")
+                    .send(
+                    {
+                        userId: usr,
+                        name: "One-Eyed Jack",
+                        bio: "Gambler",
+                        phone_number: "595"
+                    })
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans/noimage)
+                    .send(
+                    {
+                        userId: usr,
+                        name: "Dixon",
+                        bio: "Best wooden pencils you'll ever use",
+                        phone_number: "2"
+                    })
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/artisans")
+                    .expect(res.body.count, "3")
+                    .expect(200, cb);
             }
         ], done);
     });
@@ -80,7 +157,6 @@ describe("Tests artisan", function()
                         password: "gr33d1sg00d",
                         phone_number: "555"
                     })
-                    //.set("Accept", "application/json")
                     .expect(res => usr = res.body.createdUser._id)
                     .expect(res => res.body.createdUser.name, "Cash Moneybags")
                     .expect(201, cb);
