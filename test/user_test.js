@@ -301,8 +301,23 @@ describe("Tests the User request handling", function()
             {
                 request(app)
                     .get("/users/" + u2 + "/artisans")
-                    .expect(/"name": "Smartsy"/)
-                    .expect(/"name": "Fartsy"/)
+                    .expect(
+                    [
+                        {
+                            "_id": a2,
+                            "name":"Fartsy",
+                            "bio":"Likes beans too much",
+                            "phone_number":"22",
+                            "creation_date":"2019-05-10T03:58:06.207Z"
+                        },
+                        {
+                            "_id": a3,
+                            "name":"Smartsy",
+                            "bio":"Can't even draw a stick figure",
+                            "phone_number":"314265",
+                            "creation_date":"2019-05-10T03:58:06.213Z"
+                        }
+                    ])
                     .expect(200, cb);
             },
             //delete all
