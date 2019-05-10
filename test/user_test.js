@@ -217,6 +217,6 @@ describe("Tests the User request handling", function()
                     .del("/users/" + usr)
                     .expect(200, cd);
             }
-        });
-    ], done);
+        ], done);
+    });
 });
