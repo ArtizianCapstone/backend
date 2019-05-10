@@ -71,7 +71,7 @@ describe("Tests artisan", function()
         ], done);
     });
 
-    it("Can get a list of artisans", function()
+    it("Can get a list of artisans", function(done)
     {
         var usr, art;
         async.series(
