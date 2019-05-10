@@ -103,6 +103,7 @@ describe("Tests the User request handling", function()
 
     it("Gets a list of several users", function(done)
     {
+        var u1, u2, u3;
         async.series(
         [
             function(cb)
@@ -115,6 +116,7 @@ describe("Tests the User request handling", function()
                         password: "First dog's name",
                         phone_number: "789"
                     })
+                    .expect(res => u1 = res.body.createdUser._id)
                     .expect(201, cb);
             },
             function(cb)
@@ -127,6 +129,7 @@ describe("Tests the User request handling", function()
                         password: "iWillWait4U",
                         phone_number: "3000"
                     })
+                    .expect(res => u2 = res.body.createdUser._id)
                     .expect(201, cb);
             },
             function(cb)
@@ -139,6 +142,7 @@ describe("Tests the User request handling", function()
                         password: "justice",
                         phone_number: "2087"
                     })
+                    .expect(res => u3 = res.body.createdUser._id)
                     .expect(201, cb);
             },
             function(cb)
@@ -147,7 +151,72 @@ describe("Tests the User request handling", function()
                     .get("/users")
                     .expect(res => res.body.count, "3")
                     .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + u1)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + u2)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + u3)
+                    .expect(200, cb);
             }
         ], done);
     });
+
+    it("Can iteratively update properties on a user", function(done)
+    {
+        var usr;
+        async.series(
+        [
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                        name: "Some Guy",
+                        password: "weak",
+                        phone_number: "0"
+                    })
+                    .expect(res => usr = res.body.createdUser._id)
+                    .expect(res => res.body.createdUser.name, "Some Guy")
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .patch("/users/" + usr)
+                    .send(
+                    [
+                        { propName: "name", value: "Someone Else" },
+                        { propName: "password", value: "b3T3r" }
+                    ])
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/users/" + usr)
+                    .expect(res => res.body.name, "Someone Else")
+                    .expect(res => res.body.password, "b3T3r")
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + usr)
+                    .expect(200, cd);
+            }
+        });
+    ], done);
 });
