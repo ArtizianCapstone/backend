@@ -121,7 +121,7 @@ describe("Tests artisan", function()
             function(cb)
             {
                 request(app)
-                    .post("/artisans/noimage)
+                    .post("/artisans/noimage")
                     .send(
                     {
                         userId: usr,
