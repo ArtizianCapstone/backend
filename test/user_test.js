@@ -222,7 +222,7 @@ describe("Tests the User request handling", function()
 
     it("Can get artisans by user", function(done)
     {
-        var u1, u2, a1, a2, a3;
+        var u1, u2, a1, a2, a3, date1, date2;
         async.series(
         [
             //build users
@@ -280,6 +280,7 @@ describe("Tests the User request handling", function()
                         phone_number: "22"
                     })
                     .expect(res => a2 = res.body.createdArtisan._id)
+                    .expect(res => date1 = res.body.createdArtisan.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -294,6 +295,7 @@ describe("Tests the User request handling", function()
                         phone_number: "314265"
                     })
                     .expect(res => a3 = res.body.createdArtisan._id)
+                    .expect(res => date2 = res.body.createdArtisan.creation_date)
                     .expect(201, cb);
             },
             //find artisans by user
@@ -308,14 +310,14 @@ describe("Tests the User request handling", function()
                             "name":"Fartsy",
                             "bio":"Likes beans too much",
                             "phone_number":"22",
-                            "creation_date":"2019-05-10T03:58:06.207Z"
+                            "creation_date": date1
                         },
                         {
                             "_id": a3,
                             "name":"Smartsy",
                             "bio":"Can't even draw a stick figure",
                             "phone_number":"314265",
-                            "creation_date":"2019-05-10T03:58:06.213Z"
+                            "creation_date": date2
                         }
                     ])
                     .expect(200, cb);
