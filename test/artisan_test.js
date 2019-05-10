@@ -67,6 +67,12 @@ describe("Tests artisan", function()
                     .get("/artisans/" + art)
                     .expect(res => res.body.bio, "Half-orc bard")
                     .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + usr)
+                    .expect(200, cb);
             }
         ], done);
     });
@@ -137,6 +143,12 @@ describe("Tests artisan", function()
                     .get("/artisans")
                     .expect(res.body.count, "3")
                     .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + usr)
+                    .expect(200, cb);
             }
         ], done);
     });
@@ -195,6 +207,12 @@ describe("Tests artisan", function()
                     .get("/artisans/" + art)
                     .expect(res => res.body.name, "Someone Else")
                     .expect(res => res.body.phone_number, "5")
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + usr)
                     .expect(200, cb);
             }
         ], done);
@@ -317,6 +335,12 @@ describe("Tests artisan", function()
             {
                 request(app)
                     .del("/artisans/" + art)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + usr)
                     .expect(200, cb);
             },
 

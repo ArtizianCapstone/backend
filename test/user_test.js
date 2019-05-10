@@ -28,7 +28,17 @@ describe("Test Framework", function()
                 assert(usr.isNew === false);
                 done();
             });
+    });
 
+    it("Clears user for tests", function(done)
+    {
+        User.remove({ _id: id})
+            .then(() => User.findOne({ name: "John Johnson"}))
+            .then(found =>
+            {
+                assert(found === null);
+                done();
+            });
     });
 });
 
@@ -45,10 +55,10 @@ describe("Tests the User request handling", function()
     });
 
     //get specific empty
-    it("Fails to get an artisan that doesn't exist", function(done)
+    it("Fails to get a user that doesn't exist", function(done)
     {
         request(app)
-            .get("/artisans/111111111111111111111111")
+            .get("/users/111111111111111111111111")
             .expect(404)
             .end(done);
     });
@@ -80,6 +90,12 @@ describe("Tests the User request handling", function()
                     .get("/users/" + usr)
                     .expect(res => res.body.password, "gr33d1sg00d")
                     .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + usr)
+                    .expect(200, cb);
             }
         ], done);
     });
