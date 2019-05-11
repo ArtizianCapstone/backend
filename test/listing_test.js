@@ -425,7 +425,7 @@ describe("Tests Listing functionality", function()
                 request(app)
                     .del("/users/" + u2)
                     .expect(200, cb);
-            },
+            }
         ], done);
     });
 
