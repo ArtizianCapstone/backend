@@ -69,6 +69,13 @@ describe("Tests artisan", function()
                     .expect(res => res.body.bio, "Half-orc bard")
                     .expect(200, cb);
             },
+            //cleanup
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + art)
+                    .expect(200, cb);
+            },
             function(cb)
             {
                 request(app)
@@ -151,6 +158,39 @@ describe("Tests artisan", function()
                     .expect(
                     [
                         {
+                            _id: art1,
+                            bio: "Half-orc bard",
+                            creation_date: date1,
+                            phone_number: "98754",
+                            user:
+                            {
+                                _id: usr,
+                                name: "Cash Moneybags"
+                            }
+                        },
+                        {
+                            _id: art2,
+                            bio: "Gambler",
+                            creation_date: date2,
+                            name: "One-Eyed Jack",
+                            phone_number: "595",
+                            user:
+                            {
+                                _id: usr,
+                                name: "Cash Moneybags"
+                            }
+                        },
+                        {
+                            _id: art3,
+                            bio: "Best wooden pencils you'll ever use"
+                            creation_date: date3,
+                            name: "Dixon",
+                            phone_number: "2",
+                            user:
+                            {
+                                _id: usr,
+                                name: "Cash Moneybags"
+                            }
                         }
                     ])
                     .expect(200, cb);
