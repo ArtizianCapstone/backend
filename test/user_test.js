@@ -303,23 +303,7 @@ describe("Tests the User request handling", function()
             {
                 request(app)
                     .get("/users/" + u2 + "/artisans")
-                    .expect(
-                    [
-                        {
-                            "_id": a2,
-                            "name":"Fartsy",
-                            "bio":"Likes beans too much",
-                            "phone_number":"22",
-                            "creation_date": date1
-                        },
-                        {
-                            "_id": a3,
-                            "name":"Smartsy",
-                            "bio":"Can't even draw a stick figure",
-                            "phone_number":"314265",
-                            "creation_date": date2
-                        }
-                    ])
+                    .expect(res => res.body.count, "2")
                     .expect(200, cb);
             },
             //delete all
