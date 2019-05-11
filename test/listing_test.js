@@ -74,10 +74,9 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings/" + list)
-                    .expect(res => res.body.price, "50")
-                    .expect(res => res.body.description, "For writing")
-                    .expect(res => res.body.user.name, "Bossman")
-                    .expect(res => res.body.artisan.name, "Jerri Eckleson")
+                    .expect(
+                    {
+                    })
                     .expect(200, cb);
             },
             //cleanup
@@ -198,10 +197,63 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings")
-                    //TODO: change to body
                     .expect(
                     [
                         {
+                            __v: 0,
+                            _id: l1,
+                            artisan:
+                            {
+                                _id: art,
+                                name: "Pencil Pusher"
+                            },
+                            creation_date: d1,
+                            description: "Ticonderoga",
+                            name: "Pencil",
+                            price: 2,
+                            quantity: 5,
+                            user:
+                            {
+                                _id: usr,
+                                name: "Office Max"
+                            }
+                        },
+                        {
+                            __v: 0,
+                            _id: l2,
+                            artisan:
+                            {
+                                _id: art,
+                                name: "Pencil Pusher"
+                            },
+                            creation_date: d2,
+                            description: "holds paper together",
+                            name: "Paperclip",
+                            price: 3,
+                            quantity: 5,
+                            user:
+                            {
+                                _id: usr,
+                                name: "Office Max"
+                            }
+                        },
+                        {
+                            __v: 0,
+                            _id: l3,
+                            artisan:
+                            {
+                                _id: art,
+                                name: "Pencil Pusher"
+                            },
+                            creation_date: d3,
+                            description: "Better than paperclips",
+                            name: "Stapler",
+                            price: 10,
+                            user:
+                            {
+                                _id: usr,
+                                name: "Office Max"
+                            }
                         }
                     ])
                     .expect(200, cb);
@@ -244,7 +296,7 @@ describe("Tests Listing functionality", function()
 
     it("Filters by user, and artisan and user", function(done)
     {
-        var u1, u2, a1, a2, l1, l2, l3;
+        var u1, u2, a1, a2, l1, l2, l3, d1, d2, d3;
         async.series(
         [
             //create users
@@ -331,6 +383,7 @@ describe("Tests Listing functionality", function()
                         price: "200"
                     })
                     .expect(res => l1 = res.body.createdListing._id)
+                    .expect(res => d1 = res.body.createdListing.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -346,6 +399,7 @@ describe("Tests Listing functionality", function()
                         price: "5"
                     })
                     .expect(res => l2 = res.body.createdListing._id)
+                    .expect(res => d2 = res.body.createdListing.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -361,23 +415,84 @@ describe("Tests Listing functionality", function()
                         price: "40"
                     })
                     .expect(res => l3 = res.body.createdListing._id)
+                    .expect(res => d3 = res.body.createdListing.creation_date)
                     .expect(201, cb);
             },
             //filter by user
             function(cb)
             {
+                //expect l2 and l3
                 request(app)
                     .get("/listings/byuser/" + u2)
-                    .expect({})
+                    .expect(
+                    [
+                        {
+                            _id: l2,
+                            user:
+                            {
+                                _id: u2,
+                                name: "Wal Mart"
+                            },
+                            artisan:
+                            {
+                                _id: a2,
+                                name: "Fartsy"
+                            },
+                            name: "Beans",
+                            description: "Good for your heart",
+                            price: 5,
+                            creation_date: d2,
+                            __v: 0
+                        },
+                        {
+                            _id: l3,
+                            user:
+                            {
+                                _id: u2,
+                                name: "Wal Mart"
+                            },
+                            artisan:
+                            {
+                                _id: a3,
+                                name: "Smartsy"
+                            },
+                            name: "Calculator",
+                            description: "Does the thinking for you",
+                            price: 40,
+                            creation_date: d3,
+                            __v: 0
+                        }
+                    ])
                     .expect(200, cb);
 
             },
             //filter by user and artisan
             function(cb)
             {
+                //expect only l3
                 request(app)
                     .get("/listings/" + u2 + "/" + a3)
-                    .expect({})
+                    .expect(
+                    [
+                        {
+                            _id: l3,
+                            user:
+                            {
+                                _id: u2,
+                                name: "Wal Mart"
+                            },
+                            artisan:
+                            {
+                                _id: a3,
+                                name: "Smartsy"
+                            },
+                            name: "Calculator",
+                            description: "Does the thinking for you",
+                            price: 40,
+                            creation_date: d3,
+                            __v: 0
+                        }
+                    ])
                     .expect(200, cb);
             },
             //delete listings
@@ -496,6 +611,7 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings/" + list)
+                    //TODO: change to body
                     .expect(res => res.body.price, "3")
                     .expect(res => res.body.quantity, "5")
                     .expect(200, cb);

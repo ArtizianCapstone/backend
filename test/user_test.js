@@ -190,7 +190,6 @@ describe("Tests the User request handling", function()
                         phone_number: "0"
                     })
                     .expect(res => usr = res.body.createdUser._id)
-                    .expect(res => res.body.createdUser.name, "Some Guy")
                     .expect(201, cb);
             },
             function(cb)
@@ -208,8 +207,7 @@ describe("Tests the User request handling", function()
             {
                 request(app)
                     .get("/users/" + usr)
-                    .expect(res => res.body.name, "Someone Else")
-                    .expect(res => res.body.password, "b3T3r")
+                    //TODO: Check body
                     .expect(200, cb);
             },
             function(cb)
@@ -251,7 +249,6 @@ describe("Tests the User request handling", function()
                         phone_number: "0"
                     })
                     .expect(res => u2 = res.body.createdUser._id)
-                    .expect(res => res.body.createdUser.name, "Some Guy")
                     .expect(201, cb);
             },
             //build artisans

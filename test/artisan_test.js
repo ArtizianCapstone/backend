@@ -44,7 +44,6 @@ describe("Tests artisan", function()
                         phone_number: "555"
                     })
                     .expect(res => usr = res.body.createdUser._id)
-                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
                     .expect(201, cb);
             },
             function(cb)
@@ -58,7 +57,6 @@ describe("Tests artisan", function()
                         bio: "Half-orc bard",
                         phone_number: "98754"
                     })
-                    .expect(res => res.body.createdArtisan.user, usr)
                     .expect(res => art = res.body.createdArtisan._id)
                     .expect(201, cb);
             },
@@ -66,7 +64,10 @@ describe("Tests artisan", function()
             {
                 request(app)
                     .get("/artisans/" + art)
-                    .expect(res => res.body.bio, "Half-orc bard")
+                    .expect(
+                    {
+                        
+                    })
                     .expect(200, cb);
             },
             //cleanup
@@ -241,7 +242,6 @@ describe("Tests artisan", function()
                         phone_number: "555"
                     })
                     .expect(res => usr = res.body.createdUser._id)
-                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
                     .expect(201, cb);
             },
             function(cb)
@@ -256,8 +256,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
-                    .expect(res => res.body.createdArtisan.name, "Toan Deph")
-                    .expect(res => res.body.createdArtisan.phone_number, "98754")
+                    //TODO: Check body
                     .expect(201, cb);
             },
             function(cb)
@@ -269,15 +268,13 @@ describe("Tests artisan", function()
                         { propName: "name", value: "Someone Else" },
                         { propName: "phone_number", value: "5"}
                     ])
-                    .expect(res => res.body.nModified, "1")
                     .expect(200, cb);
             },
             function(cb)
             {
                 request(app)
                     .get("/artisans/" + art)
-                    .expect(res => res.body.name, "Someone Else")
-                    .expect(res => res.body.phone_number, "5")
+                    //TODO: check body
                     .expect(200, cb);
             },
             function(cb)
