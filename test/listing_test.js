@@ -350,7 +350,7 @@ describe("Tests Listing functionality", function()
                     .send(
                     {
                         userID: u2,
-                        userID: u3,
+                        artisanID: a3,
                         name: "Calculator",
                         description: "Does the thinking for you",
                         price: "40"
