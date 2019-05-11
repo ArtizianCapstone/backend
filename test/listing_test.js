@@ -74,6 +74,7 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings/" + list)
+                    //TODO: check body
                     .expect(
                     {
                     })

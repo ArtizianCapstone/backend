@@ -30,7 +30,7 @@ describe("Tests artisan", function()
     //post
     it("Creates a new artisan and finds with GET", function(done)
     {
-        var usr, art;
+        var usr, art, date;
         async.series(
         [
             function(cb)
@@ -58,6 +58,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
+                    .expect(res => date = res.body.createdArtisan.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -66,7 +67,17 @@ describe("Tests artisan", function()
                     .get("/artisans/" + art)
                     .expect(
                     {
-                        
+                        __v: 0,
+                        _id: art,
+                        bio: "Half-orc bard",
+                        creation_date: date,
+                        name: "Toan Deph",
+                        phone_number: 98754
+                        user:
+                        {
+                            _id: usr,
+                            name: "Cash Moneybags"
+                        }
                     })
                     .expect(200, cb);
             },
@@ -102,7 +113,6 @@ describe("Tests artisan", function()
                         phone_number: "555"
                     })
                     .expect(res => usr = res.body.createdUser._id)
-                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
                     .expect(201, cb);
             },
             function(cb)
@@ -155,7 +165,6 @@ describe("Tests artisan", function()
             {
                 request(app)
                     .get("/artisans")
-                    //TODO: change to body
                     .expect(
                     [
                         {
@@ -228,7 +237,7 @@ describe("Tests artisan", function()
     //patch
     it("Can iteratively update the properties of an Artisan", function(done)
     {
-        var usr, art;
+        var usr, art, date;
         async.series(
         [
             function(cb)
@@ -256,7 +265,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
-                    //TODO: Check body
+                    .expect(res => date = res.body.createdArtisan.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -275,6 +284,25 @@ describe("Tests artisan", function()
                 request(app)
                     .get("/artisans/" + art)
                     //TODO: check body
+                    .expect(
+                    {
+                        _id: art,
+                        bio: "Half-orc bard",
+                        creation_date: date,
+                        name: "Toan Deph",
+                        phone_number: "555",
+                        user:
+                        {
+                            _id: usr,
+                            name: "Cash Moneybags"
+                        }
+                    })
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + art)
                     .expect(200, cb);
             },
             function(cb)

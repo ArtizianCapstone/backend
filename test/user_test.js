@@ -150,7 +150,27 @@ describe("Tests the User request handling", function()
                 request(app)
                     .get("/users")
                     //TODO: change to full body
-                    .expect(res => res.body.count, "3")
+                    .expect(
+                    [
+                        {
+                            _id: u1,
+                            name: "Dylan Clandale",
+                            password: "First dog's name",
+                            phone_number: "789"
+                        },
+                        {
+                            _id: u2,
+                            name: "Seymore Asses",
+                            password: "iWillWait4U",
+                            phone_number: "3000"
+                        },
+                        {
+                            _id: u3,
+                            name: "Snake Vargas",
+                            password: "justice",
+                            phone_number: "2087"
+                        }
+                    ])
                     .expect(200, cb);
             },
             function(cb)
@@ -208,6 +228,12 @@ describe("Tests the User request handling", function()
                 request(app)
                     .get("/users/" + usr)
                     //TODO: Check body
+                    .expect(
+                    {
+                        _id: usr,
+                        name: "Someone Else",
+                        password: "b3T3r"
+                    })
                     .expect(200, cb);
             },
             function(cb)
