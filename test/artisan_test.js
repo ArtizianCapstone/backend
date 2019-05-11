@@ -161,6 +161,7 @@ describe("Tests artisan", function()
                             _id: art1,
                             bio: "Half-orc bard",
                             creation_date: date1,
+                            name: "Toan Deph",
                             phone_number: "98754",
                             user:
                             {
