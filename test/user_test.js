@@ -316,7 +316,7 @@ describe("Tests the User request handling", function()
                             "_id": a3,
                             "name": "Smartsy",
                             "bio": "Can't even draw a stick figure",
-                            "phone_number": "314265"
+                            "phone_number": "314265",
                             "creation_date": date2
                         }
                     ])
