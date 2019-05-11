@@ -80,7 +80,7 @@ describe("Tests artisan", function()
 
     it("Can get a list of artisans", function(done)
     {
-        var usr, art1, art2, date1, date2;
+        var usr, art1, art2, art3, date1, date2, date3;
         async.series(
         [
             function(cb)
