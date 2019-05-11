@@ -303,7 +303,7 @@ describe("Tests the User request handling", function()
             {
                 request(app)
                     .get("/users/" + u2 + "/artisans")
-                    .expect(res => res.body.count, "2")
+                    .expect({})
                     .expect(200, cb);
             },
             //delete all

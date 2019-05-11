@@ -363,7 +363,7 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings/byuser/" + u2)
-                    .expect(res => res.body.count, "2")
+                    .expect({})
                     .expect(200, cb);
 
             },
@@ -372,7 +372,7 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings/" + u2 + "/" + a3)
-                    .expect(res => res.body.count, "1")
+                    .expect({})
                     .expect(200, cb);
             },
             //delete listings
