@@ -471,8 +471,7 @@ describe("Tests Listing functionality", function()
                         artisanID: art,
                         name: "Thing",
                         description: "Perfectly generic object",
-                        price: "0",
-                        quantity: "-1"
+                        price: "0"
                     })
                     .expect(res => list = res.body.createdListing._id)
                     .expect(201, cb);
@@ -480,7 +479,7 @@ describe("Tests Listing functionality", function()
             function(cb)
             {
                 request(app)
-                    .patch("/listing/" + list)
+                    .patch("/listings/" + list)
                     .send(
                     [
                         { propName: "price", value: "3" },
@@ -506,7 +505,7 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .del("/artisans/" + art)
-                    .expect(201, cb);
+                    .expect(200, cb);
             },
             function(cb)
             {
