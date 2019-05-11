@@ -13,7 +13,7 @@ describe("Tests artisan", function()
     {
         request(app)
             .get("/artisans")
-            .expect(res => res.body.count, "0")
+            .expect([])
             .expect(200)
             .end(done);
     });
@@ -59,7 +59,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => res.body.createdArtisan.user, usr)
-                    .expect(res => art = res.body.createdArtisan._id)
+                    .expect(res => date = res.body.createdArtisan.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -80,7 +80,7 @@ describe("Tests artisan", function()
 
     it("Can get a list of artisans", function(done)
     {
-        var usr, art;
+        var usr, art1, art2, date1, date2;
         async.series(
         [
             function(cb)
@@ -109,7 +109,8 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => res.body.createdArtisan.user, usr)
-                    .expect(res => art = res.body.createdArtisan._id)
+                    .expect(res => art1 = res.body.createdArtisan._id)
+                    .expect(res => date1 = res.body.createdArtisan.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -123,6 +124,8 @@ describe("Tests artisan", function()
                         bio: "Gambler",
                         phone_number: "595"
                     })
+                    .expect(res => art2 = res.body.createdArtisan._id)
+                    .expect(res => date2 = res.body.createdArtisan.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -136,13 +139,20 @@ describe("Tests artisan", function()
                         bio: "Best wooden pencils you'll ever use",
                         phone_number: "2"
                     })
+                    .expect(res => art3 = res.body.createdArtisan._id)
+                    .expect(res => date3 = res.body.createdArtisan.creation_date)
                     .expect(201, cb);
             },
             function(cb)
             {
                 request(app)
                     .get("/artisans")
-                    .expect(res => res.body.count, "3")
+                    //TODO: change to body
+                    .expect(
+                    [
+                        {
+                        }
+                    ])
                     .expect(200, cb);
             },
             function(cb)

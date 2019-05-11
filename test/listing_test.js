@@ -8,7 +8,7 @@ describe("Tests Listing functionality", function()
     {
         request(app)
             .get("/listings")
-            .expect(req => req.body.count, "0")
+            .expect([])
             .expect(200)
             .end(done);
     });
@@ -198,7 +198,12 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings")
-                    .expect(res => res.body.count, "3")
+                    //TODO: change to body
+                    .expect(
+                    [
+                        {
+                        }
+                    ])
                     .expect(200, cb);
             },
             //delete listings
