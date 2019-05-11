@@ -72,7 +72,7 @@ describe("Tests artisan", function()
                         bio: "Half-orc bard",
                         creation_date: date,
                         name: "Toan Deph",
-                        phone_number: 98754
+                        phone_number: 98754,
                         user:
                         {
                             _id: usr,
@@ -283,7 +283,6 @@ describe("Tests artisan", function()
             {
                 request(app)
                     .get("/artisans/" + art)
-                    //TODO: check body
                     .expect(
                     {
                         _id: art,

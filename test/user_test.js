@@ -149,7 +149,6 @@ describe("Tests the User request handling", function()
             {
                 request(app)
                     .get("/users")
-                    //TODO: change to full body
                     .expect(
                     [
                         {
