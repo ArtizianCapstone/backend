@@ -59,7 +59,7 @@ describe("Tests artisan", function()
                         phone_number: "98754"
                     })
                     .expect(res => res.body.createdArtisan.user, usr)
-                    .expect(res => date = res.body.createdArtisan.creation_date)
+                    .expect(res => art = res.body.createdArtisan._id)
                     .expect(201, cb);
             },
             function(cb)
@@ -153,6 +153,25 @@ describe("Tests artisan", function()
                         {
                         }
                     ])
+                    .expect(200, cb);
+            },
+            //cleanup
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + art1)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + art2)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + art3)
                     .expect(200, cb);
             },
             function(cb)
