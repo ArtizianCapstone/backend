@@ -471,7 +471,8 @@ describe("Tests Listing functionality", function()
                         artisanID: art,
                         name: "Thing",
                         description: "Perfectly generic object",
-                        price: "0"
+                        price: "0",
+                        quantity: "-1"
                     })
                     .expect(res => list = res.body.createdListing._id)
                     .expect(201, cb);
