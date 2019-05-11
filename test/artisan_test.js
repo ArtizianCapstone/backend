@@ -182,7 +182,7 @@ describe("Tests artisan", function()
                         },
                         {
                             _id: art3,
-                            bio: "Best wooden pencils you'll ever use"
+                            bio: "Best wooden pencils you'll ever use",
                             creation_date: date3,
                             name: "Dixon",
                             phone_number: "2",
