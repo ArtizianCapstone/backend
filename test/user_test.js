@@ -50,7 +50,7 @@ describe("Tests the User request handling", function()
     {
         request(app)
             .get("/users")
-            .expect(res => res.body.count, "0")
+            .expect([])
             .expect(200)
             .end(done);
     });
@@ -67,7 +67,7 @@ describe("Tests the User request handling", function()
     //post
     it("Creates a new user and finds with GET", function(done)
     {
-        var usr, art;
+        var usr, date;
         async.series(
         [
             function(cb)
@@ -80,16 +80,31 @@ describe("Tests the User request handling", function()
                         phone_number: "555",
                         password: "gr33d1sg00d",
                     })
-                    //.set("Accept", "application/json")
                     .expect(res => usr = res.body.createdUser._id)
-                    .expect(res => res.body.createdUser.name, "Cash Moneybags")
+                    .expect(res => date = res.body.createdUser.creation_date)
                     .expect(201, cb);
             },
             function(cb)
             {
                 request(app)
                     .get("/users/" + usr)
-                    .expect(res => res.body.password, "gr33d1sg00d")
+                    .expect(
+                    {
+                        user:
+                        {
+                            _id: usr,
+                            password: "gr33d1sg00d",
+                            name: "Cash Moneybags",
+                            phone_number: "555",
+                            creation_date: date
+                        },
+                        request:
+                        {
+                            use: "Request all users",
+                            type: "GET",
+                            url: "http://localhost:3000/users"
+                        }
+                    })
                     .expect(200, cb);
             },
             function(cb)
@@ -103,7 +118,7 @@ describe("Tests the User request handling", function()
 
     it("Gets a list of several users", function(done)
     {
-        var u1, u2, u3;
+        var u1, u2, u3, d1, d2, d3;
         async.series(
         [
             function(cb)
@@ -117,6 +132,7 @@ describe("Tests the User request handling", function()
                         phone_number: "789"
                     })
                     .expect(res => u1 = res.body.createdUser._id)
+                    .expect(red => d1 = res.body.createdUser.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -130,6 +146,7 @@ describe("Tests the User request handling", function()
                         phone_number: "3000"
                     })
                     .expect(res => u2 = res.body.createdUser._id)
+                    .expect(red => d2 = res.body.createdUser.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -143,6 +160,7 @@ describe("Tests the User request handling", function()
                         phone_number: "2087"
                     })
                     .expect(res => u3 = res.body.createdUser._id)
+                    .expect(red => d3 = res.body.createdUser.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -150,26 +168,33 @@ describe("Tests the User request handling", function()
                 request(app)
                     .get("/users")
                     .expect(
-                    [
-                        {
-                            _id: u1,
-                            name: "Dylan Clandale",
-                            password: "First dog's name",
-                            phone_number: "789"
-                        },
-                        {
-                            _id: u2,
-                            name: "Seymore Asses",
-                            password: "iWillWait4U",
-                            phone_number: "3000"
-                        },
-                        {
-                            _id: u3,
-                            name: "Snake Vargas",
-                            password: "justice",
-                            phone_number: "2087"
-                        }
-                    ])
+                    {
+                        count: 3,
+                        users:
+                        [
+                            {
+                                _id: u1,
+                                name: "Dylan Clandale",
+                                password: "First dog's name",
+                                phone_number: "789",
+                                creation_date: d1
+                            },
+                            {
+                                _id: u2,
+                                name: "Seymore Asses",
+                                password: "iWillWait4U",
+                                phone_number: "3000",
+                                creation_date: d2
+                            },
+                            {
+                                _id: u3,
+                                name: "Snake Vargas",
+                                password: "justice",
+                                phone_number: "2087",
+                                creation_date: d3
+                            }
+                        ]
+                    })
                     .expect(200, cb);
             },
             function(cb)
@@ -195,7 +220,7 @@ describe("Tests the User request handling", function()
 
     it("Can iteratively update properties on a user", function(done)
     {
-        var usr;
+        var usr, date;
         async.series(
         [
             function(cb)
@@ -209,6 +234,7 @@ describe("Tests the User request handling", function()
                         phone_number: "0"
                     })
                     .expect(res => usr = res.body.createdUser._id)
+                    .expect(res => date = res.body.createdUser.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -231,7 +257,8 @@ describe("Tests the User request handling", function()
                     {
                         _id: usr,
                         name: "Someone Else",
-                        password: "b3T3r"
+                        password: "b3T3r",
+                        creation_date: date
                     })
                     .expect(200, cb);
             },
