@@ -286,15 +286,16 @@ describe("Tests artisan", function()
                     .expect(
                     {
                         _id: art,
-                        bio: "Half-orc bard",
-                        creation_date: date,
-                        name: "Someone Else",
-                        phone_number: "5",
                         user:
                         {
                             _id: usr,
                             name: "Cash Moneybags"
-                        }
+                        },
+                        name: "Someone Else",
+                        bio: "Half-orc bard",
+                        phone_number: "5",
+                        creation_date: date,
+                        __v: 0
                     })
                     .expect(200, cb);
             },

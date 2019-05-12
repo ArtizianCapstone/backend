@@ -132,7 +132,7 @@ describe("Tests the User request handling", function()
                         phone_number: "789"
                     })
                     .expect(res => u1 = res.body.createdUser._id)
-                    .expect(red => d1 = res.body.createdUser.creation_date)
+                    .expect(res => d1 = res.body.createdUser.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -252,13 +252,22 @@ describe("Tests the User request handling", function()
             {
                 request(app)
                     .get("/users/" + usr)
-                    //TODO: Check body
                     .expect(
                     {
-                        _id: usr,
-                        name: "Someone Else",
-                        password: "b3T3r",
-                        creation_date: date
+                        request:
+                        {
+                            type: "GET",
+                            url: "http://localhost:3000/users"
+                            use: "Request all users"
+                        }
+                        user:
+                        {
+                            _id: usr,
+                            name: "Someone Else",
+                            password: "b3T3r",
+                            phone_number: "",
+                            creation_date: date
+                        }
                     })
                     .expect(200, cb);
             },

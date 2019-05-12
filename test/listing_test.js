@@ -567,9 +567,9 @@ describe("Tests Listing functionality", function()
         ], done);
     });
 
-    it("iteratevely updates", function(done)
+    it("iteratively updates", function(done)
     {
-        var usr, art, list;
+        var usr, art, list, date;
         async.series(
         [
             function(cb)
@@ -612,6 +612,7 @@ describe("Tests Listing functionality", function()
                         price: "0"
                     })
                     .expect(res => list = res.body.createdListing._id)
+                    .expect(res => date = res.body.createdListing.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -629,10 +630,25 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings/" + list)
-                    //TODO: change to body
                     .expect(
                     {
-                        _id: list
+                        __v: 0,
+                        _id: list,
+                        user:
+                        {
+                            _id: usr,
+                            name: "Bossman"
+                        },
+                        artisan: 
+                        {
+                            _id: art,
+                            name: "Thing maker"
+                        },
+                        creation_date: date,
+                        description: "Perfectly generic object",
+                        name: "Thing"
+                        price: 3,
+                        quantity: 5
 
                     })
                     .expect(200, cb);
