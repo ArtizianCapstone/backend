@@ -259,7 +259,7 @@ describe("Tests the User request handling", function()
                             type: "GET",
                             url: "http://localhost:3000/users",
                             use: "Request all users"
-                        }
+                        },
                         user:
                         {
                             _id: usr,
