@@ -13,6 +13,8 @@ const upload = uploadFramework.upload;
 router.get('/', (req, res, next) => {
     Listing.find()
 //      .select('name description price listingImage creation_date')
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
@@ -128,6 +130,8 @@ router.get("/:listingID", (req, res, next) =>
 {
     const id = req.params.listingID;
     Listing.findById(id)
+        .populate("User")
+        .populate("Artisan")
         .populate('artisan', 'name')
         .populate('user', 'name')
         .exec()
@@ -155,6 +159,8 @@ router.get("/byuser/:userID", (req, res, next) =>
 {
     const usr = req.params.userID;
     Listing.find({ user: usr })
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
@@ -187,6 +193,8 @@ router.get("/:userID/:artisanID", (req, res, next) =>
             user: usr,
             artisan: art
         })
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()

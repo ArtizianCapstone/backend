@@ -154,6 +154,7 @@ router.get('/:artisanId', (req, res, next) => {
     const id = req.params.artisanId;
     Artisan.findById(id)
         .populate("User")
+        .populate('user', 'name')
         .exec()
         .then(doc =>
         {

@@ -72,7 +72,7 @@ describe("Tests artisan", function()
                         bio: "Half-orc bard",
                         creation_date: date,
                         name: "Toan Deph",
-                        phone_number: 98754,
+                        phone_number: "98754",
                         user:
                         {
                             _id: usr,
@@ -288,8 +288,8 @@ describe("Tests artisan", function()
                         _id: art,
                         bio: "Half-orc bard",
                         creation_date: date,
-                        name: "Toan Deph",
-                        phone_number: "555",
+                        name: "Someone Else",
+                        phone_number: "5",
                         user:
                         {
                             _id: usr,
