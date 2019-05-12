@@ -257,7 +257,7 @@ describe("Tests the User request handling", function()
                         request:
                         {
                             type: "GET",
-                            url: "http://localhost:3000/users"
+                            url: "http://localhost:3000/users",
                             use: "Request all users"
                         }
                         user:
