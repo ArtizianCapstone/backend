@@ -185,7 +185,7 @@ describe("Tests the User request handling", function()
                                 request:
                                 {
                                     type: "GET",
-                                    url: "http://localhost:300/users/" + u1,
+                                    url: "http://localhost:3000/users/" + u1,
                                     use: "Request specific user."
                                 }
                             },
@@ -198,7 +198,7 @@ describe("Tests the User request handling", function()
                                 request:
                                 {
                                     type: "GET",
-                                    url: "http://localhost:300/users/" + u2,
+                                    url: "http://localhost:3000/users/" + u2,
                                     use: "Request specific user."
                                 }
                             },
@@ -211,7 +211,7 @@ describe("Tests the User request handling", function()
                                 request:
                                 {
                                     type: "GET",
-                                    url: "http://localhost:300/users/" + u3,
+                                    url: "http://localhost:3000/users/" + u3,
                                     use: "Request specific user."
                                 }
                             }
