@@ -74,9 +74,25 @@ describe("Tests Listing functionality", function()
             {
                 request(app)
                     .get("/listings/" + list)
-                    //TODO: check body
                     .expect(
                     {
+                        __v: 0,
+                        _id: list,
+                        artisan:
+                        {
+                            _id: art,
+                            name: "Jerri Eckleson"
+                        },
+                        creation_date: date,
+                        description: "For writing",
+                        name: "Fountain pen",
+                        price: 50,
+                        quantity: 2,
+                        user:
+                        {
+                            _id: usr,
+                            name: "Bossman"
+                        }
                     })
                     .expect(200, cb);
             },
@@ -99,6 +115,7 @@ describe("Tests Listing functionality", function()
                     .del("/users/" + usr)
                     .expect(200, cb);
             },
+            //can't delete missing
             function(cb)
             {
                 request(app)
@@ -613,8 +630,11 @@ describe("Tests Listing functionality", function()
                 request(app)
                     .get("/listings/" + list)
                     //TODO: change to body
-                    .expect(res => res.body.price, "3")
-                    .expect(res => res.body.quantity, "5")
+                    .expect(
+                    {
+                        _id: list
+
+                    })
                     .expect(200, cb);
             },
             function(cb)
