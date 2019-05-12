@@ -646,7 +646,7 @@ describe("Tests Listing functionality", function()
                         },
                         creation_date: date,
                         description: "Perfectly generic object",
-                        name: "Thing"
+                        name: "Thing",
                         price: 3,
                         quantity: 5
 
