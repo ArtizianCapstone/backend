@@ -193,8 +193,8 @@ router.get("/:userID/:artisanID", (req, res, next) =>
             user: usr,
             artisan: art
         })
-        .populate("User")
-        .populate("Artisan")
+        //.populate("User")
+        //.populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
