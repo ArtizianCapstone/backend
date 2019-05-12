@@ -50,7 +50,11 @@ describe("Tests the User request handling", function()
     {
         request(app)
             .get("/users")
-            .expect([])
+            .expect(
+            {
+                count: 0,
+                users: []
+            })
             .expect(200)
             .end(done);
     });
@@ -146,7 +150,7 @@ describe("Tests the User request handling", function()
                         phone_number: "3000"
                     })
                     .expect(res => u2 = res.body.createdUser._id)
-                    .expect(red => d2 = res.body.createdUser.creation_date)
+                    .expect(res => d2 = res.body.createdUser.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -160,7 +164,7 @@ describe("Tests the User request handling", function()
                         phone_number: "2087"
                     })
                     .expect(res => u3 = res.body.createdUser._id)
-                    .expect(red => d3 = res.body.createdUser.creation_date)
+                    .expect(res => d3 = res.body.createdUser.creation_date)
                     .expect(201, cb);
             },
             function(cb)
@@ -265,7 +269,7 @@ describe("Tests the User request handling", function()
                             _id: usr,
                             name: "Someone Else",
                             password: "b3T3r",
-                            phone_number: "",
+                            phone_number: "0",
                             creation_date: date
                         }
                     })
