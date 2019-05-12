@@ -181,21 +181,39 @@ describe("Tests the User request handling", function()
                                 name: "Dylan Clandale",
                                 password: "First dog's name",
                                 phone_number: "789",
-                                creation_date: d1
+                                creation_date: d1,
+                                request:
+                                {
+                                    type: "GET",
+                                    url: "http://localhost:300/users/" + u1,
+                                    use: "Request specific user."
+                                }
                             },
                             {
                                 _id: u2,
                                 name: "Seymore Asses",
                                 password: "iWillWait4U",
                                 phone_number: "3000",
-                                creation_date: d2
+                                creation_date: d2,
+                                request:
+                                {
+                                    type: "GET",
+                                    url: "http://localhost:300/users/" + u2,
+                                    use: "Request specific user."
+                                }
                             },
                             {
                                 _id: u3,
                                 name: "Snake Vargas",
                                 password: "justice",
                                 phone_number: "2087",
-                                creation_date: d3
+                                creation_date: d3,
+                                request:
+                                {
+                                    type: "GET",
+                                    url: "http://localhost:300/users/" + u3,
+                                    use: "Request specific user."
+                                }
                             }
                         ]
                     })
