@@ -32,7 +32,7 @@ describe("Tests the funcionality of meetings", function()
                     .post("/users")
                     .send(
                     {
-                        name: "Lester Tester"
+                        name: "Lester Tester",
                         password: "For single meeting",
                         phone_number "0",
                     })
