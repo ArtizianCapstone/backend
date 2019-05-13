@@ -22,8 +22,8 @@ describe("Tests the funcionality of meetings", function()
 
     it("Creates a new meeting and GETS it", function(done)
     {
-        var usr, art, meet, time;
-        time = new Date();
+        var usr, art, meet;
+        var time = new Date();
         async.series(
         [
             function(cb)
@@ -42,11 +42,12 @@ describe("Tests the funcionality of meetings", function()
             function(cb)
             {
                 request(app)
-                    .post("/artisans")
+                    .post("/artisans/noimage")
                     .send(
                     {
                         userId: usr,
-                        name: "Always late"
+                        name: "Always late",
+                        bio: "bad bio"
                     })
                     .expect(res => art = res.body.createdArtisan._id)
                     .expect(201, cb);
@@ -140,7 +141,7 @@ describe("Tests the funcionality of meetings", function()
             function(cb)
             {
                 request(app)
-                    .post("/artisans")
+                    .post("/artisans/noimage")
                     .send(
                     {
                         userId: usr,
@@ -152,7 +153,7 @@ describe("Tests the funcionality of meetings", function()
             function(cb)
             {
                 request(app)
-                    .post("/artisans")
+                    .post("/artisans/noimage")
                     .send(
                     {
                         userId: usr,
