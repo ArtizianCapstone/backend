@@ -164,7 +164,7 @@ router.get("/byuser/:userID", (req, res, next) =>
         .then(doc =>
         {
             console.log("Finding by user", doc);
-            if (doc)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
@@ -198,7 +198,7 @@ router.get("/:userID/:artisanID", (req, res, next) =>
         .then(doc =>
         {
             console.log("Finding by user and artisan", doc);
-            if (doc)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
