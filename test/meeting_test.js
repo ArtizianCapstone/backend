@@ -72,6 +72,7 @@ describe("Tests the funcionality of meetings", function()
                     .get("/meetings/" + meet)
                     .expect(
                     {
+                        __v: 0,
                         _id: meet,
                         user: 
                         {
