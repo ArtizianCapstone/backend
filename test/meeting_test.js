@@ -122,180 +122,183 @@ describe("Tests the funcionality of meetings", function()
         var time2 = new Date();
         var time3 = new Date();
 
-        function(cb)
-        {
-            request(app)
-                .post("/users")
-                .send(
-                {
-                    name: "Original name",
-                    password: "boring",
-                    phone_number: "0"
-                })
-                .expect(res => usr = res.body.createdUser._id)
-                .expect(201, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .post("/artisans")
-                .send(
-                {
-                    userId: usr,
-                    name: "Nearly Done"
-                })
-                .expect(res => art1 = res.body.createdArtisan._id)
-                .expect(201, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .post("/artisans")
-                .send(
-                {
-                    userId: usr,
-                    name: "Having Problems"
-                })
-                .expect(res => art2 = res.body.createdArtisan._id)
-                .expect(201, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .post("/meetings")
-                .send(
-                {
-                    userID: usr,
-                    artisanID: art1,
-                    date: time1,
-                    itemsExpected: 1
-                })
-                .expect(res => meet1 = res.body.createdMeeting._id)
-                .expect(201, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .post("/meetings")
-                .send(
-                {
-                    userID: usr,
-                    artisanID: art1,
-                    date: time2,
-                    itemsExpected: 2
-                })
-                .expect(res => meet2 = res.body.createdMeeting._id)
-                .expect(201, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .post("/meetings")
-                .send(
-                {
-                    userID: usr,
-                    artisanID: art2,
-                    date: time3,
-                    itemsExpected: 3
-                })
-                .expect(res => meet3 = res.body.createdMeeting._id)
-                .expect(201, cb);
-        },
-        //get the list
-        function(cb)
-        {
-            request(cb)
-                .get("/meetings")
-                .expect(
-                [
+        async.series(
+        [
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
                     {
-                        __v: 0,
-                        _id: meet1,
-                        user:
-                        {
-                            _id: usr,
-                            name: "Original name"
-                        },
-                        artisan:
-                        {
-                            _id: art1,
-                            name: "Nearly Done"
-                        },
+                        name: "Original name",
+                        password: "boring",
+                        phone_number: "0"
+                    })
+                    .expect(res => usr = res.body.createdUser._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans")
+                    .send(
+                    {
+                        userId: usr,
+                        name: "Nearly Done"
+                    })
+                    .expect(res => art1 = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans")
+                    .send(
+                    {
+                        userId: usr,
+                        name: "Having Problems"
+                    })
+                    .expect(res => art2 = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/meetings")
+                    .send(
+                    {
+                        userID: usr,
+                        artisanID: art1,
                         date: time1,
                         itemsExpected: 1
-                    },
+                    })
+                    .expect(res => meet1 = res.body.createdMeeting._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/meetings")
+                    .send(
                     {
-                        __v: 0,
-                        _id: meet2,
-                        user:
-                        {
-                            _id: usr,
-                            name: "Original name"
-                        },
-                        artisan:
-                        {
-                            _id: art2,
-                            name: "Having Problems"
-                        },
+                        userID: usr,
+                        artisanID: art1,
                         date: time2,
                         itemsExpected: 2
-                    },
+                    })
+                    .expect(res => meet2 = res.body.createdMeeting._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/meetings")
+                    .send(
                     {
-                        __v: 0,
-                        _id: meet3,
-                        user:
-                        {
-                            _id: usr,
-                            name: "Original name"
-                        },
-                        artisan:
-                        {
-                            _id: art2,
-                            name: "Having Problems"
-                        },
+                        userID: usr,
+                        artisanID: art2,
                         date: time3,
                         itemsExpected: 3
-                    }
-                ])
-                .expect(200, cb);
-        },
-        //cleanup
-        function(cb)
-        {
-            request(app)
-                .del("/meetings/" + meet1)
-                .expect(200, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .del("/meetings/" + meet2)
-                .expect(200, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .del("/meetings/" + meet3)
-                .expect(200, cb)
-        },
-        function(cb)
-        {
-            request(app)
-                .del("/artisans/" + art1)
-                .expect(200, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .del("/artisans/" + art2)
-                .expect(200, cb);
-        },
-        function(cb)
-        {
-            request(app)
-                .del("/users/" + usr)
-                .expect(200, cb);
-        }
+                    })
+                    .expect(res => meet3 = res.body.createdMeeting._id)
+                    .expect(201, cb);
+            },
+            //get the list
+            function(cb)
+            {
+                request(cb)
+                    .get("/meetings")
+                    .expect(
+                    [
+                        {
+                            __v: 0,
+                            _id: meet1,
+                            user:
+                            {
+                                _id: usr,
+                                name: "Original name"
+                            },
+                            artisan:
+                            {
+                                _id: art1,
+                                name: "Nearly Done"
+                            },
+                            date: time1,
+                            itemsExpected: 1
+                        },
+                        {
+                            __v: 0,
+                            _id: meet2,
+                            user:
+                            {
+                                _id: usr,
+                                name: "Original name"
+                            },
+                            artisan:
+                            {
+                                _id: art2,
+                                name: "Having Problems"
+                            },
+                            date: time2,
+                            itemsExpected: 2
+                        },
+                        {
+                            __v: 0,
+                            _id: meet3,
+                            user:
+                            {
+                                _id: usr,
+                                name: "Original name"
+                            },
+                            artisan:
+                            {
+                                _id: art2,
+                                name: "Having Problems"
+                            },
+                            date: time3,
+                            itemsExpected: 3
+                        }
+                    ])
+                    .expect(200, cb);
+            },
+            //cleanup
+            function(cb)
+            {
+                request(app)
+                    .del("/meetings/" + meet1)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/meetings/" + meet2)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/meetings/" + meet3)
+                    .expect(200, cb)
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + art1)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/artisans/" + art2)
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + usr)
+                    .expect(200, cb);
+            }
+        ], done);
     });
 
     it("Throws 500 when updates missing", function(done)
