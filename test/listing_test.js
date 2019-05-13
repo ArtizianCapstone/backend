@@ -513,13 +513,29 @@ describe("Tests Listing functionality", function()
                     ])
                     .expect(200, cb);
             },
-            //delete listings
             function(cb)
             {
                 request(app)
                     .del("/listings/" + l1)
                     .expect(200, cb);
             },
+            //fails to find anything
+            function(cb)
+            {
+                request(app)
+                    .get("/listings/byuser/" + u1)
+                    .expect({ message: "No listing found for this user" })
+                    .expect(404, cb);
+
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/listings/" + u1 + "/" + a1)
+                    .expect({ message: "No listing between artistan and user found"})
+                    .expect(404, cb);
+            },
+            //delete listings
             function(cb)
             {
                 request(app)
@@ -672,5 +688,12 @@ describe("Tests Listing functionality", function()
                     .expect(200, cb);
             }
         ], done);
+    });
+
+    it("Throws 500 when updates missing", function(cb)
+    {
+        request(app)
+            .patch("/listings/111111111111111111111111")
+            .expect(500);
     });
 });

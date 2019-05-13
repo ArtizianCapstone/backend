@@ -486,5 +486,12 @@ describe("Tests artisan", function()
             .expect(200)
             .end(done);
     });
+
+    it("Throws 500 when updates missing", function(cb)
+    {
+        request(app)
+            .patch("/artisans/111111111111111111111111")
+            .expect(500);
+    });
 });
 

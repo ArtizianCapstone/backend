@@ -445,4 +445,11 @@ describe("Tests the User request handling", function()
             .expect(200)
             .end(done);
     });
+
+    it("Throws 500 when updates missing", function(cb)
+    {
+        request(app)
+            .patch("/users/111111111111111111111111")
+            .expect(500);
+    });
 });
