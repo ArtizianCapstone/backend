@@ -17,7 +17,7 @@ router.get('/', (req, res, next) =>
         .then(docs =>
         {
             console.log(docs);
-            if (docs.length >= 0)
+            if (docs.length > 0)
             {
                 res.status(200).json(docs);
             }

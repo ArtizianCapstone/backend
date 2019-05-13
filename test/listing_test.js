@@ -8,8 +8,8 @@ describe("Tests Listing functionality", function()
     {
         request(app)
             .get("/listings")
-            .expect([])
-            .expect(200)
+            .expect({ message: "No entries found"})
+            .expect(404)
             .end(done);
     });
 
