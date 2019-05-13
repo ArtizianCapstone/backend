@@ -311,4 +311,4 @@ describe("Tests the funcionality of meetings", function()
     });
 });
 
-function trimDate(date) { return date.substring(7, date.lenghth - 2); }
+function trimDate(date) { return date.toString().substring(7, date.lenghth - 2); }
