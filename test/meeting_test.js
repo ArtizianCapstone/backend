@@ -23,7 +23,7 @@ describe("Tests the funcionality of meetings", function()
     it("Creates a new meeting and GETS it", function(done)
     {
         var usr, art, meet;
-        var time = trimDate(new Date());
+        var time = new Date();
         async.series(
         [
             function(cb)
@@ -120,9 +120,9 @@ describe("Tests the funcionality of meetings", function()
     it("Gets a list of meetings", function(done)
     {
         var usr, art1, art2, meet1, meet2, meet3;
-        var time1 = trimDate(new Date());
-        var time2 = trimDate(new Date());
-        var time3 = trimDate(new Date());
+        var time1 = new Date();
+        var time2 = new Date();
+        var time3 = new Date();
 
         async.series(
         [
