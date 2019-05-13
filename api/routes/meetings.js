@@ -23,19 +23,13 @@ router.get('/', (req, res, next) =>
             }
             else
             {
-                res.status(404).json(
-                {
-                    message: "No entries found"
-                })
+                res.status(404).json( { message: "No entries found" });
             }
         })
         .catch(err => 
         {
             console.log(err);
-            res.status(500).json(
-            {
-                error: err
-            });
+            res.status(500).json( { error: err });
         });
 });
 
@@ -197,17 +191,11 @@ router.delete('/:meetingID', (req, res, next) =>
     const id = req.params.meetingID;
     Meeting.remove({_id: id})
         .exec()
-        .then(result =>
-        {
-            res.status(200).json(result);
-        })
+        .then(result => { res.status(200).json(result); })
         .catch(err =>
         {
             console.log(err);
-            res.status(500).json(
-            {
-                error: err
-            });
+            res.status(500).json( { error: err });
         });
 });
 
