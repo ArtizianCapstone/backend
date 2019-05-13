@@ -446,10 +446,11 @@ describe("Tests the User request handling", function()
             .end(done);
     });
 
-    it("Throws 500 when updates missing", function(cb)
+    it("Throws 500 when updates missing", function(done)
     {
         request(app)
             .patch("/users/111111111111111111111111")
-            .expect(500);
+            .expect(500)
+            .end(done);
     });
 });

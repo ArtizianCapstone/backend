@@ -690,10 +690,11 @@ describe("Tests Listing functionality", function()
         ], done);
     });
 
-    it("Throws 500 when updates missing", function(cb)
+    it("Throws 500 when updates missing", function(done)
     {
         request(app)
             .patch("/listings/111111111111111111111111")
-            .expect(500);
+            .expect(500)
+            .end(done);
     });
 });
