@@ -34,7 +34,7 @@ describe("Tests the funcionality of meetings", function()
                     {
                         name: "Lester Tester",
                         password: "For single meeting",
-                        phone_number "0",
+                        phone_number: "0",
                     })
                     .expect(res => usr = res.body.createdUser._id)
                     .expect(201, cb);
@@ -74,7 +74,7 @@ describe("Tests the funcionality of meetings", function()
                         _id: meet,
                         user: 
                         {
-                            _id; usr,
+                            _id: usr,
                             name: "Lester Tester"
                         },
                         artisan:
