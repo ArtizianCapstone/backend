@@ -6,7 +6,7 @@ const meetingSchema = mongoose.Schema(
     _id: mongoose.Schema.Types.ObjectId,
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     artisan: {type: mongoose.Schema.Types.ObjectId, ref: 'Artisan', required: true},
-    date: {type: String, required: true},
+    date: {type: Date, required: true},
     itemsExpected: {type: Number, required: true}
 });
 
