@@ -266,7 +266,7 @@ router.delete('/:artisanId', (req, res, next) => {
         },
         function(cb)
         {
-            Artisan.deleteOne({ _id: art }).exec().then(result => 
+            Artisan.deleteOne({ _id: art }, cb).exec().then(result => 
             {
                 res.status(200).json(result);
             });
