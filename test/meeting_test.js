@@ -84,7 +84,7 @@ describe("Tests the funcionality of meetings", function()
                             _id: art,
                             name: "Always late"
                         },
-                        date: time,
+                        date: time.toString(),
                         itemsExpected: 3
                     }).
                     expect(200, cb);
@@ -171,7 +171,7 @@ describe("Tests the funcionality of meetings", function()
                     {
                         userID: usr,
                         artisanID: art1,
-                        date: time1,
+                        date: time1.toString(),
                         itemsExpected: 1
                     })
                     .expect(res => meet1 = res.body.createdMeeting._id)
@@ -185,7 +185,7 @@ describe("Tests the funcionality of meetings", function()
                     {
                         userID: usr,
                         artisanID: art1,
-                        date: time2,
+                        date: time2.toString(),
                         itemsExpected: 2
                     })
                     .expect(res => meet2 = res.body.createdMeeting._id)
@@ -199,7 +199,7 @@ describe("Tests the funcionality of meetings", function()
                     {
                         userID: usr,
                         artisanID: art2,
-                        date: time3,
+                        date: time3.toString(),
                         itemsExpected: 3
                     })
                     .expect(res => meet3 = res.body.createdMeeting._id)
@@ -225,7 +225,7 @@ describe("Tests the funcionality of meetings", function()
                                 _id: art1,
                                 name: "Nearly Done"
                             },
-                            date: time1,
+                            date: time1.toString(),
                             itemsExpected: 1
                         },
                         {
@@ -241,7 +241,7 @@ describe("Tests the funcionality of meetings", function()
                                 _id: art2,
                                 name: "Having Problems"
                             },
-                            date: time2,
+                            date: time2.toString(),
                             itemsExpected: 2
                         },
                         {
@@ -257,7 +257,7 @@ describe("Tests the funcionality of meetings", function()
                                 _id: art2,
                                 name: "Having Problems"
                             },
-                            date: time3,
+                            date: time3.toString(),
                             itemsExpected: 3
                         }
                     ])
