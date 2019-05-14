@@ -160,7 +160,7 @@ router.post('/', (req, res, next) =>
 //update meeting
 router.patch('/:meetingID', (req, res, next) => 
 {
-    const id = req.params.productId;
+    const id = req.params.meetingID;
     const updateOps = {};
     for (const ops of req.body)
     {
