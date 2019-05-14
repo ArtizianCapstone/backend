@@ -22,7 +22,8 @@ describe("Tests Listing functionality", function()
 
     it("Creates a new listing and GETs it", function(done)
     {
-        var usr, art, list, date;
+        var usr, art, list;
+        var date;
         async.series(
         [
             function(cb)
