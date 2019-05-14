@@ -66,6 +66,7 @@ describe("Tests the funcionality of meetings", function()
                     .expect(res => meet = res.body.createdMeeting._id)
                     .expect(201, cb);
             },
+            /*
             function(cb)
             {
                 request(app)
@@ -89,6 +90,7 @@ describe("Tests the funcionality of meetings", function()
                     }).
                     expect(200, cb);
             },
+            */
             function(cb)
             {
                 request(app)
