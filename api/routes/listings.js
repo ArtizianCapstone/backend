@@ -254,17 +254,11 @@ router.delete("/:listingID", (req, res, next) =>
     const id = req.params.listingID;
     Listing.remove({_id: id})
         .exec()
-        .then(result =>
-        {
-            res.status(200).json(result);
-        })
+        .then(result => { res.status(200).json(result); })
         .catch(err =>
         {
             console.log(err);
-            res.status(500).json(
-            {
-                error: err
-            });
+            res.status(500).json( { error: err });
         });
 });
 
