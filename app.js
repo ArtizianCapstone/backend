@@ -9,6 +9,7 @@ const artisanRoutes = require('./api/routes/artisans');
 const listingRoutes = require('./api/routes/listings');
 const meetingRoutes = require('./api/routes/meetings');
 const orderRoutes = require('./api/routes/orders');
+var connected;
 
 mongoose.Promise = global.Promise;
 
