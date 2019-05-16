@@ -84,7 +84,7 @@ describe("Tests the funcionality of meetings", function()
                             _id: art,
                             name: "Always late"
                         },
-                        date: time.toString(),
+                        date: time,
                         itemsExpected: 3
                     }).
                     expect(200, cb);
@@ -199,7 +199,7 @@ describe("Tests the funcionality of meetings", function()
                     {
                         userID: usr,
                         artisanID: art2,
-                        date: time3.toString(),
+                        date: time3,
                         itemsExpected: 3
                     })
                     .expect(res => meet3 = res.body.createdMeeting._id)
@@ -225,7 +225,7 @@ describe("Tests the funcionality of meetings", function()
                                 _id: art1,
                                 name: "Nearly Done"
                             },
-                            date: time1.toString(),
+                            date: time1,
                             itemsExpected: 1
                         },
                         {
@@ -241,7 +241,7 @@ describe("Tests the funcionality of meetings", function()
                                 _id: art2,
                                 name: "Having Problems"
                             },
-                            date: time2.toString(),
+                            date: time2,
                             itemsExpected: 2
                         },
                         {
@@ -257,7 +257,7 @@ describe("Tests the funcionality of meetings", function()
                                 _id: art2,
                                 name: "Having Problems"
                             },
-                            date: time3.toString(),
+                            date: time3,
                             itemsExpected: 3
                         }
                     ])
