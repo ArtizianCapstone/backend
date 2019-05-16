@@ -9,11 +9,10 @@ const artisanRoutes = require('./api/routes/artisans');
 const listingRoutes = require('./api/routes/listings');
 const meetingRoutes = require('./api/routes/meetings');
 const orderRoutes = require('./api/routes/orders');
-var connected;
 
 mongoose.Promise = global.Promise;
 
-if (!connected)
+if (process.env.MAIN_DB)
 {
     console.log("Connecting to main database");
     mongoose.connect(
@@ -22,8 +21,7 @@ if (!connected)
         '@artizian-shard-00-00-kdklx.mongodb.net:27017,artizian-shard-00-01-kdklx.mongodb.net:27017,artizian-shard-00-02-kdklx.mongodb.net:27017/test?ssl=true&replicaSet=Artizian-shard-0&authSource=admin&retryWrites=true',
         {
             useNewUrlParser: true
-        })
-        .then(() => connected = true);
+        });
 }
 
 
