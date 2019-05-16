@@ -15,6 +15,7 @@ mongoose.Promise = global.Promise;
 
 if (!connected)
 {
+    console.log("Connecting to main database");
     mongoose.connect(
         'mongodb://jkurtz678:'+
         process.env.MONGO_ATLAS_PW + 

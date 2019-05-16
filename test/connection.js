@@ -12,7 +12,7 @@ before(function(done)
 
     mongoose.connection.once('open', function()
     {
-        console.log("Connection made");
+        console.log("Connection made to test database");
         connected = true;
         done();
     })
