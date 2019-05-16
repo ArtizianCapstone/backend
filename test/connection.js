@@ -1,3 +1,4 @@
+var connected;
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
@@ -12,7 +13,7 @@ before(function(done)
     mongoose.connection.once('open', function()
     {
         console.log("Connection made");
-        window.connected = true;
+        connected = true;
         done();
     })
         .on('error', function(error)

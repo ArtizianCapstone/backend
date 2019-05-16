@@ -12,7 +12,7 @@ const orderRoutes = require('./api/routes/orders');
 
 mongoose.Promise = global.Promise;
 
-if (!window.connected)
+if (!connected)
 {
     mongoose.connect(
         'mongodb://jkurtz678:'+
@@ -21,7 +21,7 @@ if (!window.connected)
         {
             useNewUrlParser: true
         })
-        .then(() => window.connected = true);
+        .then(() => connected = true);
 }
 
 
