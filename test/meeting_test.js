@@ -86,8 +86,10 @@ describe("Tests the funcionality of meetings", function()
                         },
                         date: time,
                         itemsExpected: 3
-                    }).
-                    expect(200, cb);
+                    })
+                    //convert date
+                    .expect(res => res.body.date = new Date(res.body.date))
+                    .expect(200, cb);
             },
             function(cb)
             {
