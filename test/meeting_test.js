@@ -211,6 +211,7 @@ describe("Tests the funcionality of meetings", function()
             {
                 request(cb)
                     .get("/meetings")
+                    .expect(res => res.body[0].date = new Date(res.body[0].date))
                     .expect(
                     [
                         {
