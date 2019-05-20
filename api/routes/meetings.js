@@ -24,7 +24,7 @@ router.get('/', (req, res, next) =>
             //console.log(JSON.stringify(JSON.decycle(docs)));
             if (docs.length > 0)
             {
-                res.status(200).json(docs);
+                res.status(200).json(JSON.decycle(docs));
             }
             else
             {
