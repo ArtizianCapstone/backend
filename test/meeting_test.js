@@ -1,6 +1,8 @@
 const request = require("supertest");
 const app = require('../app');
 const async = require("async");
+const assert = require("assert");
+//const JSON = require("JSON");
 
 describe("Tests the funcionality of meetings", function()
 {
@@ -211,9 +213,15 @@ describe("Tests the funcionality of meetings", function()
             {
                 request(cb)
                     .get("/meetings")
-                    .expect(res => res.body[0].date = new Date(res.body[0].date))
-                    .expect(res => res.body[1].date = new Date(res.body[1].date))
-                    .expect(res => res.body[2].date = new Date(res.body[2].date))
+                    .expect(res =>
+                    {
+                        var data = JSON.parse(res.body);
+                        assert(3, data.length);
+                        assert(meet1, data[0]._id);
+                        assert(usr, data[0].user._id);
+                        assert(time2, new Date(data[1].date));
+                    })
+                    /*
                     .expect(
                     [
                         {
@@ -265,6 +273,7 @@ describe("Tests the funcionality of meetings", function()
                             itemsExpected: 3
                         }
                     ])
+                    */
                     .expect(200, cb);
             },
             //cleanup
