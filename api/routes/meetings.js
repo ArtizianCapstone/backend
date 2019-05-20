@@ -21,7 +21,7 @@ router.get('/', (req, res, next) =>
         .then(docs =>
         {
             //console.log(util.inspect(docs));
-            console.log(JSON.stringify(docs));
+            console.log(JSON.stringify(JSON.decycle(docs)));
             if (docs.length > 0)
             {
                 res.status(200).json(docs);
