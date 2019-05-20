@@ -2,6 +2,7 @@ const request = require("supertest");
 const app = require('../app');
 const async = require("async");
 const assert = require("assert");
+const util = require("util");
 
 describe("Tests the funcionality of meetings", function()
 {
@@ -214,6 +215,7 @@ describe("Tests the funcionality of meetings", function()
                     .get("/meetings")
                     .expect(res =>
                     {
+                        console.log(util.inspect(res.body));
                         assert(3, res.body.length);
                         assert(meet1, res.body[0]._id);
                         assert(usr, res.body[0].user._id);
