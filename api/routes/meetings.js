@@ -12,7 +12,7 @@ router.get('/', (req, res, next) =>
 {
     Meeting.find()
         .populate("User")
-        //.populate("Artisan")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
@@ -41,7 +41,7 @@ router.get('/:meetingID', (req, res, next) =>
     const id = req.params.meetingID;
     Meeting.findById(id)
         .populate("User")
-        //.populate("Artisan")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
@@ -70,7 +70,7 @@ router.get("/byuser/:userID", (req, res, next) =>
     const usr = req.params.userID;
     Meeting.find({ user: usr })
         .populate("User")
-        //.populate("Artisan")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
@@ -104,7 +104,7 @@ router.get("/:userID/:artisanID", (req, res, next) =>
             artisan: art
         })
         .populate("User")
-        //.populate("Artisan")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
