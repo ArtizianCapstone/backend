@@ -214,6 +214,7 @@ describe("Tests the funcionality of meetings", function()
             //get the list
             function(cb)
             {
+                console.log("About to test GET meetings list");
                 request(cb)
                     .get("/meetings")
                     /*
