@@ -178,6 +178,7 @@ describe("Tests the funcionality of meetings", function()
                         itemsExpected: 1
                     })
                     .expect(res => meet1 = res.body.createdMeeting._id)
+                    .expect(res => time1 = res.body.createdMeeting.date)
                     .expect(201, cb);
             },
             function(cb)
@@ -192,6 +193,7 @@ describe("Tests the funcionality of meetings", function()
                         itemsExpected: 2
                     })
                     .expect(res => meet2 = res.body.createdMeeting._id)
+                    .expect(res => time2 = res.body.createdMeeting.date)
                     .expect(201, cb);
             },
             function(cb)
@@ -206,6 +208,7 @@ describe("Tests the funcionality of meetings", function()
                         itemsExpected: 3
                     })
                     .expect(res => meet3 = res.body.createdMeeting._id)
+                    .expect(res => time3 = res.body.createdMeeting.date)
                     .expect(201, cb);
             },
             //get the list
@@ -213,6 +216,7 @@ describe("Tests the funcionality of meetings", function()
             {
                 request(cb)
                     .get("/meetings")
+                    /*
                     .expect(res =>
                     {
                         console.log(util.inspect(res.body));
@@ -221,7 +225,7 @@ describe("Tests the funcionality of meetings", function()
                         assert(usr, res.body[0].user._id);
                         //assert(time2, new Date(res.body[1].date));
                     })
-                    /*
+                    */
                     .expect(
                     [
                         {
@@ -273,7 +277,6 @@ describe("Tests the funcionality of meetings", function()
                             itemsExpected: 3
                         }
                     ])
-                    */
                     .expect(200, cb);
             },
             //cleanup
