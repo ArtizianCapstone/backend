@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require('../app');
 const async = require("async");
 const assert = require("assert");
-const JSON = require("JSON");
+const JSON = require("json");
 
 describe("Tests the funcionality of meetings", function()
 {
