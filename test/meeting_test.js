@@ -226,6 +226,7 @@ describe("Tests the funcionality of meetings", function()
                         //assert(time2, new Date(res.body[1].date));
                     })
                     */
+                    /*
                     .expect(
                     [
                         {
@@ -277,6 +278,7 @@ describe("Tests the funcionality of meetings", function()
                             itemsExpected: 3
                         }
                     ])
+                    */
                     .expect(200, cb);
             },
             //cleanup
