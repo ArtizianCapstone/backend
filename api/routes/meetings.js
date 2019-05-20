@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
 const Meeting = require("../models/meeting");
+const util = require("util");
 
 //get all meetings
 router.get('/', (req, res, next) => 
@@ -18,7 +19,8 @@ router.get('/', (req, res, next) =>
         .exec()
         .then(docs =>
         {
-            console.log(docs);
+            console.log(util.inspect(docs));
+            //console.log(docs);
             if (docs.length > 0)
             {
                 res.status(200).json(docs);
