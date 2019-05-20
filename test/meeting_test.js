@@ -174,7 +174,7 @@ describe("Tests the funcionality of meetings", function()
                     {
                         userID: usr,
                         artisanID: art1,
-                        date: time1.toString(),
+                        date: time1,
                         itemsExpected: 1
                     })
                     .expect(res => meet1 = res.body.createdMeeting._id)
@@ -189,7 +189,7 @@ describe("Tests the funcionality of meetings", function()
                     {
                         userID: usr,
                         artisanID: art1,
-                        date: time2.toString(),
+                        date: time2,
                         itemsExpected: 2
                     })
                     .expect(res => meet2 = res.body.createdMeeting._id)
