@@ -219,7 +219,7 @@ describe("Tests the funcionality of meetings", function()
                         assert(3, data.length);
                         assert(meet1, data[0]._id);
                         assert(usr, data[0].user._id);
-                        assert(time2, new Date(data[1].date));
+                        //assert(time2, new Date(data[1].date));
                     })
                     /*
                     .expect(
