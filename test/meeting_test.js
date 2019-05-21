@@ -72,7 +72,7 @@ describe("Tests the funcionality of meetings", function()
             {
                 request(app)
                     .get("/meetings/" + meet)
-                    //.expect(res => res.body.date = new Date(res.body.date))
+                    .expect(res => res.body.date = new Date(res.body.date))
                     .expect(
                     {
                         __v: 0,
