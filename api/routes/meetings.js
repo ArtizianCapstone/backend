@@ -20,11 +20,10 @@ router.get('/', (req, res, next) =>
         .exec()
         .then(docs =>
         {
-            //console.log(util.inspect(docs));
-            //console.log(JSON.stringify(JSON.decycle(docs)));
+            console.log("Checking length");
             if (docs.length > 0)
             {
-                res.status(200).json(JSON.decycle(docs));
+                res.status(200).json(docs);
             }
             else
             {
