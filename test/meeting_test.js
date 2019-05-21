@@ -214,7 +214,7 @@ describe("Tests the funcionality of meetings", function()
             //get the list
             function(cb)
             {
-                request(cb)
+                request(app)
                     .get("/meetings")
                     /*
                     .expect(res =>
@@ -226,7 +226,12 @@ describe("Tests the funcionality of meetings", function()
                         //assert(time2, new Date(res.body[1].date));
                     })
                     */
-                    /*
+                    .expect(res =>
+                    {
+                        var i;
+                        for (i = 0; i < 3; i++)
+                            res.body[i].date = new Date(res.body[i].date);
+                    })
                     .expect(
                     [
                         {
@@ -278,7 +283,6 @@ describe("Tests the funcionality of meetings", function()
                             itemsExpected: 3
                         }
                     ])
-                    */
                     .expect(200, cb);
             },
             //cleanup
