@@ -266,12 +266,34 @@ router.delete('/:artisanId', (req, res, next) => {
         },
         function(cb)
         {
-            Artisan.deleteOne({ _id: art }).exec().then(result => 
-            {
-                res.status(200).json(result);
+            Artisan.deleteOne({ _id: art }, cb);
+            /*
+                .exec().then(result => 
+                {
+                    res.status(200).json(result);
+                });
+            */
+        },
+        function(cb)
+        {
+            res.status(200).json(
+            { 
+                message: "Artisan deleted",
+                request:
+                {
+                    type: "DELETE",
+                    url: "http://localhost:3000/artisans"
+                }
             });
         }
-    ], next);
+    ], err =>
+    {
+        if (err)
+        {
+            console.log(err);
+            res.status(500).json({ error: err });
+        }
+    });
 });
 
 module.exports = router;

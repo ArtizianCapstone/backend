@@ -314,7 +314,6 @@ describe("Tests artisan", function()
         ], done);
     });
 
-    /*
     //delete
     it("Deletes pertinent meetings and listings along with deleted artisan", function(done)
     {
@@ -478,7 +477,6 @@ describe("Tests artisan", function()
             }
         ], done);
     });
-    */
 
     //deletes nonexistant?
     it("Fails to delete an artisan that doesn't exist", function(done)
