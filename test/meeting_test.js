@@ -72,7 +72,7 @@ describe("Tests the funcionality of meetings", function()
             {
                 request(app)
                     .get("/meetings/" + meet)
-                    .expect(res => res.body.date = new Date(res.body.date))
+                    //.expect(res => res.body.date = new Date(res.body.date))
                     .expect(
                     {
                         __v: 0,
@@ -225,13 +225,13 @@ describe("Tests the funcionality of meetings", function()
                         assert(usr, res.body[0].user._id);
                         //assert(time2, new Date(res.body[1].date));
                     })
-                    */
                     .expect(res =>
                     {
                         var i;
                         for (i = 0; i < 3; i++)
                             res.body[i].date = new Date(res.body[i].date);
                     })
+                    */
                     .expect(
                     [
                         {
@@ -260,8 +260,8 @@ describe("Tests the funcionality of meetings", function()
                             },
                             artisan:
                             {
-                                _id: art2,
-                                name: "Having Problems"
+                                _id: art1,
+                                name: "Nearly Done"
                             },
                             date: time2,
                             itemsExpected: 2
