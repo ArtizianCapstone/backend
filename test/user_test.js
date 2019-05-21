@@ -43,6 +43,11 @@ describe("Test Framework", function()
     });
 });
 
+function wipe()
+{
+    Users.remove({}).exec();
+}
+
 describe("Tests the User request handling", function()
 {
     //get
@@ -122,6 +127,7 @@ describe("Tests the User request handling", function()
 
     it("Gets a list of several users", function(done)
     {
+        wipe();
         var u1, u2, u3, d1, d2, d3;
         async.series(
         [
