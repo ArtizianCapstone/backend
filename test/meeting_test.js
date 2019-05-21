@@ -3,11 +3,13 @@ const app = require('../app');
 const async = require("async");
 const assert = require("assert");
 const util = require("util");
+const Meeting = require("../models/meeting");
 
 describe("Tests the funcionality of meetings", function()
 {
     it("Finds an empty list", function(done)
     {
+        Meeting.remove({}).exec();
         request(app)
             .get("/meetings")
             .expect({ message: "No entries found" })
