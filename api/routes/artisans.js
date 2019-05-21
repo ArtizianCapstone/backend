@@ -267,14 +267,15 @@ router.delete('/:artisanId', (req, res, next) => {
         function(cb)
         {
             Artisan.deleteOne({ _id: art }, cb);
-            /*
-                .exec().then(result => 
-                {
-                    res.status(200).json(result);
-                });
-            */
-        },
-        function(cb)
+        }
+    ], err =>
+    {
+        if (err)
+        {
+            console.log(err);
+            res.status(500).json({ error: err });
+        }
+        else
         {
             res.status(200).json(
             { 
@@ -285,13 +286,6 @@ router.delete('/:artisanId', (req, res, next) => {
                     url: "http://localhost:3000/artisans"
                 }
             });
-        }
-    ], err =>
-    {
-        if (err)
-        {
-            console.log(err);
-            res.status(500).json({ error: err });
         }
     });
 });

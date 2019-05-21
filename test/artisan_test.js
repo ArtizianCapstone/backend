@@ -433,12 +433,6 @@ describe("Tests artisan", function()
                     .del("/artisans/" + art)
                     .expect(200, cb);
             },
-            function(cb)
-            {
-                request(app)
-                    .del("/users/" + usr)
-                    .expect(200, cb);
-            },
 
             //checks artisan
             function(cb)
@@ -474,6 +468,12 @@ describe("Tests artisan", function()
                 request(app)
                     .get("/meetings/" + meet2)
                     .expect(404, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .del("/users/" + usr)
+                    .expect(200, cb);
             }
         ], done);
     });
