@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
-const Meeting = require('../models/artisan');
+const Meeting = require('../models/meeting');
 const Listing = require('../models/listing');
 const async = require("async");
 
