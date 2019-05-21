@@ -258,11 +258,11 @@ router.delete('/:artisanId', (req, res, next) => {
     [
         function(cb)
         {
-            Listing.deleteMany({ artisan: art }, cb);
+            Meeting.deleteMany({ artisan: art }, cb);
         },
         function(cb)
         {
-            Meeting.deleteMany({ artisan: art }, cb);
+            Listing.deleteMany({ artisan: art }, cb);
         },
         function(cb)
         {
