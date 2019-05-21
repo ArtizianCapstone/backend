@@ -3,7 +3,7 @@ const app = require('../app');
 const async = require("async");
 const assert = require("assert");
 const util = require("util");
-const Meeting = require("../models/meeting");
+const Meeting = require("../api/models/meeting");
 
 describe("Tests the funcionality of meetings", function()
 {
