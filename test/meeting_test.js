@@ -536,6 +536,67 @@ describe("Tests the funcionality of meetings", function()
                     .expect(res => usr = res.body.createdUser._id)
                     .expect(201, cb);
             },
+            function(cb)
+            {
+                request(app)
+                    .post("/meetings/noimage")
+                    .send(
+                    {
+                        name: "Something Clever",
+                        userId: usr
+                    })
+                    .expect(res => art = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/meetings")
+                    .send(
+                    {
+                        userID: usr,
+                        artisanID: art,
+                        itemsExpected: 1,
+                        date: time
+                    })
+                    .expect(res => meet = res.body.createdMeeting._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                time = new Date();
+                request(app)
+                    .patch("/meetings/" + meet)
+                    .send(
+                    [
+                        { propName: "itemsExpected", value: 5 },
+                        { propName: "date", value: time }
+                    ])
+                    .expect(200, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .get("/meetings/" + meet)
+                    .expect(res => res.body.date = new Date(res.body.date))
+                    .expect(
+                    {
+                        __v: 0,
+                        user:
+                        {
+                            name: "Post Man",
+                            _id: usr
+                        },
+                        artisan:
+                        {
+                            name: "Something Clever",
+                            _id: art
+                        },
+                        itemsExpected: 5,
+                        date: time
+                    })
+                    .expect(200, cb);
+            }
         ], done);
     });
 
