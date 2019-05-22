@@ -394,8 +394,8 @@ describe("Tests the funcionality of meetings", function()
                     {
                         userID: usr1,
                         artisanID: art1,
-                        date: time1,
-                        itemsExpected: 1
+                        itemsExpected: 1,
+                        date: time1
                     })
                     .expect(res => meet1 = res.body.createdMeeting._id)
                     .expect(201, cb);
@@ -408,8 +408,8 @@ describe("Tests the funcionality of meetings", function()
                     {
                         userID: usr1,
                         artisanID: art2,
-                        date: time2,
-                        itemsExpected: 2
+                        itemsExpected: 2,
+                        date: time2
                     })
                     .expect(res => meet2 = res.body.createdMeeting._id)
                     .expect(201, cb);
@@ -436,6 +436,12 @@ describe("Tests the funcionality of meetings", function()
             {
                 request(app)
                     .get("/meetings/byuser/" + usr1)
+                    .expect(res =>
+                    {
+                        var i;
+                        for (i = 0; i < 2; i++)
+                            res.body[i].date = new Date(res.body[i].date);
+                    })
                     .expect(
                     [
                         {
@@ -468,7 +474,7 @@ describe("Tests the funcionality of meetings", function()
                             },
                             date: time2,
                             itemsExpected: 2,
-                            id: meet2
+                            _id: meet2
                         }
                     ])
                     .expect(200, cb);
