@@ -448,7 +448,7 @@ describe("Tests the funcionality of meetings", function()
                                 _id: art1,
                                 name: "Doing Better"
                             },
-                            date: date1,
+                            date: time1,
                             itemsExpected: 1,
                             _id: meet1
                         },
