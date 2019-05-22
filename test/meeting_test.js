@@ -541,7 +541,7 @@ describe("Tests the funcionality of meetings", function()
             function(cb)
             {
                 request(app)
-                    .post("/meetings/noimage")
+                    .post("/meetings")
                     .send(
                     {
                         name: "Something Clever",
