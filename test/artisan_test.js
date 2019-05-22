@@ -4,13 +4,14 @@ var async = require("async");
 var app = require('../app');
 var assert = require("assert");
 //var User = require("../api/models/user");
-//var Artisan = require("../api/models/artisan");
+var Artisan = require("../api/models/artisan");
 
 describe("Tests artisan", function()
 {
     //get
     it("Gets empty list", function(done)
     {
+        Artisan.remove({}).exec();
         request(app)
             .get("/artisans")
             .expect([])
@@ -99,6 +100,7 @@ describe("Tests artisan", function()
 
     it("Can get a list of artisans", function(done)
     {
+        Artisan.remove({}).exec();
         var usr, art1, art2, art3, date1, date2, date3;
         async.series(
         [

@@ -1,8 +1,6 @@
 const request = require("supertest");
 const app = require('../app');
 const async = require("async");
-const assert = require("assert");
-const util = require("util");
 const Meeting = require("../api/models/meeting");
 
 describe("Tests the funcionality of meetings", function()
@@ -327,6 +325,167 @@ describe("Tests the funcionality of meetings", function()
         ], done);
     });
 
+    it("Filters meetings by user and artisan", function(done)
+    {
+        var usr1, usr2, art1, art2, meet1, meet2, meet3;
+        var time1 = new Date();
+        var time2 = new Date();
+        var time3 = new Date();
+
+        async.series(
+        [
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                    })
+                    .expect(res => usr1 = res.body.createdUser._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                    })
+                    .expect(res => usr2 = res.body.createdUser._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans/noimage")
+                    .send(
+                    {
+                    })
+                    .expect(res => art1 = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/artisans/noimage")
+                    .send(
+                    {
+                    })
+                    .expect(res => art2 = res.body.createdArtisan._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/meetings")
+                    .send(
+                    {
+                    })
+                    .expect(res => meet1 = res.body.createdMeeting._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/meetings")
+                    .send(
+                    {
+                    })
+                    .expect(res => meet2 = res.body.createdMeeting._id)
+                    .expect(201, cb);
+            },
+            function(cb)
+            {
+                request(app)
+                    .post("/meetings")
+                    .send(
+                    {
+                    })
+                    .expect(res => meet3 = res.body.createdMeeting._id)
+                    .expect(201, cb);
+            },
+
+            //filter by user
+            function(cb)
+            {
+                request(app)
+                    .get("/meetings/byuser/" + usr1)
+                    .expect(
+                    [
+                        {
+                            __v: 0,
+                            user:
+                            {
+                                _id: usr1,
+                                name: 
+                            },
+                            artisan: 
+                            {
+                                _id: ,
+                                name:
+                            },
+                            date: ,
+                            itemsExpected: ,
+                            _id:
+                        }
+                    ])
+                    .expect(200, cb);
+            },
+            //none for this user
+            function(cb)
+            {
+                request(app)
+                    .get("/meetings/byuser/" + usr2)
+                    .expect({ message: "No meeting found for this user" })
+                    .expect(404, cb);
+            },
+            //by artisan and user
+            function(cb)
+            {
+                request(app)
+                    .get("/meetings/" + "/" + )
+                    .expect(
+                    [
+                        {
+                            __v: 0,
+                            user:
+                            {
+                                _id: usr1,
+                                name: 
+                            },
+                            artisan: 
+                            {
+                                _id: ,
+                                name:
+                            },
+                            date: ,
+                            itemsExpected: ,
+                            _id:
+                        }
+                    ])
+                    .expect(200, cb);
+            },
+            //none for artisan and user
+            function(cb)
+            {
+                request(app)
+                    .get("/meetings/" + "/" + )
+                    .expect({ message: "No meeting between artistan and user found" })
+                    .expect(404, cb);
+            }
+        ], done);
+    });
+
+    it("Iteratively updates the properites of a meeting", function(done)
+    {
+        var usr, art, meet;
+        var time = new Date();
+
+        async.series(
+        [
+        ], done);
+    });
+
     it("Throws 500 when updates missing", function(done)
     {
         request(app)
@@ -335,5 +494,3 @@ describe("Tests the funcionality of meetings", function()
             .end(done);
     });
 });
-
-function trimDate(date) { return date.toString().substring(7, date.lenghth - 2); }

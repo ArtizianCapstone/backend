@@ -79,7 +79,7 @@ router.get("/byuser/:userID", (req, res, next) =>
         .then(doc =>
         {
             console.log("Finding by user", doc);
-            if (doc)
+            if (doc > 0)
             {
                 res.status(200).json(doc);
             }
