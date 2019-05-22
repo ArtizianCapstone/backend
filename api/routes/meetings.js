@@ -6,8 +6,6 @@ const mongoose = require('mongoose');
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
 const Meeting = require("../models/meeting");
-const util = require("util");
-const JSON = require('circular-json');
 
 //get all meetings
 router.get('/', (req, res, next) => 
@@ -50,7 +48,7 @@ router.get('/:meetingID', (req, res, next) =>
         .then(doc =>
         {
             console.log("From database", doc);
-            if (doc)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
@@ -79,7 +77,7 @@ router.get("/byuser/:userID", (req, res, next) =>
         .then(doc =>
         {
             console.log("Finding by user", doc);
-            if (doc > 0)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
@@ -113,7 +111,7 @@ router.get("/:userID/:artisanID", (req, res, next) =>
         .then(doc =>
         {
             console.log("Finding by user and artisan", doc);
-            if (doc)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
@@ -188,10 +186,7 @@ router.patch('/:meetingID', (req, res, next) =>
     .catch(err =>
     {
         console.log(err);
-        res.status(500).json(
-        {
-            error: err
-        });
+        res.status(500).json({ error: err });
     });
 });
 

@@ -523,6 +523,19 @@ describe("Tests the funcionality of meetings", function()
 
         async.series(
         [
+            function(cb)
+            {
+                request(app)
+                    .post("/users")
+                    .send(
+                    {
+                        name: "Post Man",
+                        password: "broked",
+                        phone_number: "3"
+                    })
+                    .expect(res => usr = res.body.createdUser._id)
+                    .expect(201, cb);
+            },
         ], done);
     });
 
