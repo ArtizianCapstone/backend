@@ -492,6 +492,12 @@ describe("Tests the funcionality of meetings", function()
             {
                 request(app)
                     .get("/meetings/" + usr1 + "/" + art1)
+                    .expect(res =>
+                    {
+                        var i;
+                        for (i = 0; i < 1; i++)
+                            res.body[i].date = new Date(res.body[i].date);
+                    })
                     .expect(
                     [
                         {
@@ -601,7 +607,8 @@ describe("Tests the funcionality of meetings", function()
                             _id: art
                         },
                         itemsExpected: 5,
-                        date: time
+                        date: time,
+                        _id: meet
                     })
                     .expect(200, cb);
             }
