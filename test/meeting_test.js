@@ -483,7 +483,7 @@ describe("Tests the funcionality of meetings", function()
             function(cb)
             {
                 request(app)
-                    .get("/meetings/" usr1 + "/" + art1)
+                    .get("/meetings/" + usr1 + "/" + art1)
                     .expect(
                     [
                         {
@@ -509,7 +509,7 @@ describe("Tests the funcionality of meetings", function()
             function(cb)
             {
                 request(app)
-                    .get("/meetings/" usr2 + "/" + art1)
+                    .get("/meetings/" + usr2 + "/" + art1)
                     .expect({ message: "No meeting between artistan and user found" })
                     .expect(404, cb);
             }
