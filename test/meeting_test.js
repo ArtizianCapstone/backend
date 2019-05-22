@@ -127,6 +127,8 @@ describe("Tests the funcionality of meetings", function()
         var time2 = new Date();
         var time3 = new Date();
 
+        Meeting.remove({}).exec();
+
         async.series(
         [
             function(cb)

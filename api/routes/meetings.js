@@ -48,7 +48,7 @@ router.get('/:meetingID', (req, res, next) =>
         .then(doc =>
         {
             console.log("From database", doc);
-            if (doc > 0)
+            if (doc)
             {
                 res.status(200).json(doc);
             }
