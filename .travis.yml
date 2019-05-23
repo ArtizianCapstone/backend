@@ -14,3 +14,7 @@ braches:
     - cascade-artisan
 
 services: mongodb
+
+script:
+    - npm test
+    - npm coverage
