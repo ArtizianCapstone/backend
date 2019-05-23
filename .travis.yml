@@ -16,5 +16,5 @@ braches:
 services: mongodb
 
 script:
-    - npm test #|| nyc report --reporter=text-lcov | coveralls
+    - nyc npm test || nyc report --reporter=text-lcov | coveralls
     #- npm run-script coverage
