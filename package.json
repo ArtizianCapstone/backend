@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha --timeout 5000",
+    "test": "nyc mocha --timeout 5000 || nyc report --reporter=text-lcov | coveralls",
     "start": "nodemon server.js",
     "coverage": "instanbul cover _mocha --report lcovonly -- -R spec && cat ./coverage/lcov/info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
