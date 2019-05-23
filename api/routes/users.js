@@ -130,7 +130,7 @@ router.get('/:userId', (req, res, next) => {
 router.get('/:userId/artisans', (req, res, next) => {
     const id = req.params.userId;
     Artisan.find({user: id})
-        .select('_id password name bio phone_number image creation_date')
+        .select('_id name bio phone_number image creation_date')
         .exec()
         .then(doc => {
             console.log("From database", doc);
@@ -219,7 +219,7 @@ router.delete('/:userId', (req, res, next) => {
                 message: 'User deleted',
                 request: {
                     use: 'Create new user.',
-                    type: 'POST',
+                    type: 'DELETE',
                     url: 'http://localhost:3000/users',
                     body: {name: 'String', phone_number: 'String' }
                 }

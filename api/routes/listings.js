@@ -13,6 +13,8 @@ const upload = uploadFramework.upload;
 router.get('/', (req, res, next) => {
     Listing.find()
 //      .select('name description price listingImage creation_date')
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
@@ -29,16 +31,13 @@ router.get('/', (req, res, next) => {
         })
         */  
             console.log(docs);
-            if (docs.length >= 0)
+            if (docs.length > 0)
             {
                 res.status(200).json(docs);
             }
             else
             {
-                res.status(404).json(
-                {
-                    message: "No entries found"
-                })
+                res.status(404).json( { message: "No entries found" });
             }
         })
         .catch(err => {
@@ -128,6 +127,8 @@ router.get("/:listingID", (req, res, next) =>
 {
     const id = req.params.listingID;
     Listing.findById(id)
+        .populate("User")
+        .populate("Artisan")
         .populate('artisan', 'name')
         .populate('user', 'name')
         .exec()
@@ -155,13 +156,15 @@ router.get("/byuser/:userID", (req, res, next) =>
 {
     const usr = req.params.userID;
     Listing.find({ user: usr })
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
         .then(doc =>
         {
             console.log("Finding by user", doc);
-            if (doc)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
@@ -187,13 +190,15 @@ router.get("/:userID/:artisanID", (req, res, next) =>
             user: usr,
             artisan: art
         })
+        //.populate("User")
+        //.populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
         .then(doc =>
         {
             console.log("Finding by user and artisan", doc);
-            if (doc)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
@@ -249,18 +254,13 @@ router.delete("/:listingID", (req, res, next) =>
     const id = req.params.listingID;
     Listing.remove({_id: id})
         .exec()
-        .then(result =>
-        {
-            res.status(200).json(result);
-        })
+        .then(result => { res.status(200).json(result); })
         .catch(err =>
         {
             console.log(err);
-            res.status(500).json(
-            {
-                error: err
-            });
+            res.status(500).json({ error: err });
         });
 });
 
+//export
 module.exports = router;

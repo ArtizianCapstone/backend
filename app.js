@@ -12,14 +12,17 @@ const orderRoutes = require('./api/routes/orders');
 
 mongoose.Promise = global.Promise;
 
-
-mongoose.connect(
-    'mongodb://jkurtz678:'+
-    process.env.MONGO_ATLAS_PW + 
-    '@artizian-shard-00-00-kdklx.mongodb.net:27017,artizian-shard-00-01-kdklx.mongodb.net:27017,artizian-shard-00-02-kdklx.mongodb.net:27017/test?ssl=true&replicaSet=Artizian-shard-0&authSource=admin&retryWrites=true',
-    {
-        useNewUrlParser: true
-    });
+if (process.env.MAIN_DB)
+{
+    console.log("Connecting to main database");
+    mongoose.connect(
+        'mongodb://jkurtz678:'+
+        process.env.MONGO_ATLAS_PW + 
+        '@artizian-shard-00-00-kdklx.mongodb.net:27017,artizian-shard-00-01-kdklx.mongodb.net:27017,artizian-shard-00-02-kdklx.mongodb.net:27017/test?ssl=true&replicaSet=Artizian-shard-0&authSource=admin&retryWrites=true',
+        {
+            useNewUrlParser: true
+        });
+}
 
 
 app.use(morgan('dev'));

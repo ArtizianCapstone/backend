@@ -1,5 +1,6 @@
 {
     "env": {
-        "MONGO_ATLAS_PW" : "artizian"
+        "MONGO_ATLAS_PW" : "artizian",
+        "MAIN_DB": true
     }
 }

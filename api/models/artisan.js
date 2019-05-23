@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+//const Listing = require("./listing");
+//const Meeting = require("./meeting");
 
 const artisanSchema = mongoose.Schema( {
     _id: mongoose.Schema.Types.ObjectId,
@@ -9,5 +11,14 @@ const artisanSchema = mongoose.Schema( {
     image: {type: String, required: false},
     creation_date: { type: Date, required: true}
 });
+
+/*
+artisanSchema.pre("delteOne", function(next)
+{
+    Listing.deleteMany({artisan: this._id}).exec();
+    Meeting.deleteMany({artisan: this._id}).exec();
+    next();
+});
+*/
 
 module.exports = mongoose.model('Artisan', artisanSchema);

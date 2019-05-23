@@ -1,10 +1,13 @@
-require('./smsFramework')();
+require('./smsFramework');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
 const Artisan = require('../models/artisan');
 const User = require('../models/user');
+const Meeting = require('../models/meeting');
+const Listing = require('../models/listing');
+const async = require("async");
 
 var uploadFramework = require('./uploadFramework');
 const upload = uploadFramework.upload;
@@ -81,7 +84,7 @@ router.post('/', upload.single('image'), (req, res, next) => {
             console.log( result);
             res.status(201).json({
                 message: 'Artisan stored',
-                createdOrder: {
+                createdArtisan: {
                     _id: result._id,
                     user: result.user,
                     name: result.name,
@@ -127,7 +130,7 @@ router.post('/noimage', (req, res, next) => {
             console.log( result);
             res.status(201).json({
                 message: 'Artisan stored',
-                createdOrder: {
+                createdArtisan: {
                     _id: result._id,
                     user: result.user,
                     name: result.name,
@@ -143,11 +146,35 @@ router.post('/noimage', (req, res, next) => {
                 error: err
             });
         });
-    });
+});
 
 
 
 router.get('/:artisanId', (req, res, next) => {
+    const id = req.params.artisanId;
+    Artisan.findById(id)
+        .populate("User")
+        .populate('user', 'name')
+        .exec()
+        .then(doc =>
+        {
+            console.log("From database", doc);
+            if (doc)
+            {
+                res.status(200).json(doc);
+            }
+            else
+            {
+                res.status(404).json({message: "No valid entry found for provided ID"});
+            }
+        })
+        .catch(err => 
+        {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+        
+        /*
     Artisan.findById(req.params.artisanId)
         .populate( 'User')
         .exec()
@@ -166,6 +193,7 @@ router.get('/:artisanId', (req, res, next) => {
                 error: err
             });
         });
+        */
 });
 
 /*
@@ -212,54 +240,54 @@ router.patch('/:artisanID', (req, res, next) =>
 
 
 router.delete('/:artisanId', (req, res, next) => {
-    Artisan.remove({_id: req.params.artisanId })
-        .exec()
-        .then( result => {
-            res.status(200).json({
-                message: 'Artisan deleted',
-                request: {
-                    type: "POST",
-                    url: "http://localhost:3000/orders"//,
-                    //body: { ProductId: 'ID', quantity: 'Number'}
+    var art = req.params.artisanId;
+
+    //delete listngs
+    /*
+    Artisan.deleteOne({_id: art }, function(err1)
+    {
+        //delete meetings
+        Meeting.deleteMany({ artisan: art }, function(err2)
+        {
+            //delete artisan
+            Listing.deleteMany({ artisan: art });
+        });
+    })*/
+
+    async.series(
+    [
+        function(cb)
+        {
+            Meeting.deleteMany({ artisan: art }, cb);
+        },
+        function(cb)
+        {
+            Listing.deleteMany({ artisan: art }, cb);
+        },
+        function(cb)
+        {
+            Artisan.deleteOne({ _id: art }, cb);
+        }
+    ], err =>
+    {
+        if (err)
+        {
+            console.log(err);
+            res.status(500).json({ error: err });
+        }
+        else
+        {
+            res.status(200).json(
+            { 
+                message: "Artisan deleted",
+                request:
+                {
+                    type: "DELETE",
+                    url: "http://localhost:3000/artisans"
                 }
             });
-        })
-});
-
-
-//update artisan
-router.patch('/:artisanID', (req, res, next) => 
-{
-    const id = req.params.artisanID;
-    const updateOps = {};
-    for (const ops of req.body)
-    {
-        updateOps[ops.propName] = ops.value;
-    }
-    //find by ID
-    Artisan.update(
-    {
-        _id: id
-    },
-    {
-        //set each member
-        $set: updateOps
-    })
-    .exec()
-    .then(result =>
-    {
-        console.log(result);
-        res.status(200).json(result);
-    })
-    .catch(err =>
-    {
-        console.log(err);
-        res.status(500).json(
-        {
-            error: err
-        });
+        }
     });
 });
-
 
 module.exports = router;

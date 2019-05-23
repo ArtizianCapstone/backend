@@ -11,31 +11,27 @@ const Meeting = require("../models/meeting");
 router.get('/', (req, res, next) => 
 {
     Meeting.find()
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
         .then(docs =>
         {
             console.log(docs);
-            if (docs.length >= 0)
+            if (docs.length > 0)
             {
                 res.status(200).json(docs);
             }
             else
             {
-                res.status(404).json(
-                {
-                    message: "No entries found"
-                })
+                res.status(404).json({ message: "No entries found" });
             }
         })
         .catch(err => 
         {
             console.log(err);
-            res.status(500).json(
-            {
-                error: err
-            });
+            res.status(500).json({ error: err });
         });
 });
 
@@ -44,6 +40,8 @@ router.get('/:meetingID', (req, res, next) =>
 {
     const id = req.params.meetingID;
     Meeting.findById(id)
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
@@ -56,7 +54,7 @@ router.get('/:meetingID', (req, res, next) =>
             }
             else
             {
-                res.status(404).json({message: "No valid entry found for provided ID"});
+                res.status(404).json({ message: "No valid entry found for provided ID"});
             }
         })
         .catch(err => 
@@ -71,19 +69,21 @@ router.get("/byuser/:userID", (req, res, next) =>
 {
     const usr = req.params.userID;
     Meeting.find({ user: usr })
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
         .then(doc =>
         {
             console.log("Finding by user", doc);
-            if (doc)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
             else
             {
-                res.status(404).json({message: "No meeting found for this user"});
+                res.status(404).json({ message: "No meeting found for this user" });
             }
         })
         .catch(err =>
@@ -103,13 +103,15 @@ router.get("/:userID/:artisanID", (req, res, next) =>
             user: usr,
             artisan: art
         })
+        .populate("User")
+        .populate("Artisan")
         .populate('user', 'name')
         .populate('artisan', 'name')
         .exec()
         .then(doc =>
         {
             console.log("Finding by user and artisan", doc);
-            if (doc)
+            if (doc.length > 0)
             {
                 res.status(200).json(doc);
             }
@@ -184,10 +186,7 @@ router.patch('/:meetingID', (req, res, next) =>
     .catch(err =>
     {
         console.log(err);
-        res.status(500).json(
-        {
-            error: err
-        });
+        res.status(500).json({ error: err });
     });
 });
 
@@ -197,17 +196,11 @@ router.delete('/:meetingID', (req, res, next) =>
     const id = req.params.meetingID;
     Meeting.remove({_id: id})
         .exec()
-        .then(result =>
-        {
-            res.status(200).json(result);
-        })
+        .then(result => { res.status(200).json(result); })
         .catch(err =>
         {
             console.log(err);
-            res.status(500).json(
-            {
-                error: err
-            });
+            res.status(500).json({ error: err });
         });
 });
 
