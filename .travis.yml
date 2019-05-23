@@ -17,4 +17,4 @@ services: mongodb
 
 script:
     - npm test
-    - npm coverage
+    - npm run-script coverage
