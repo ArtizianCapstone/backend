@@ -1,3 +1,4 @@
+/*
 var AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
 
@@ -27,3 +28,4 @@ module.exports = function() {
 
     this.testSmsFramework = function( arg ) { return "successful function call with arg: " + arg }
 }
+*/
